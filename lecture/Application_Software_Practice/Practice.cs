@@ -16,6 +16,8 @@ namespace Application_Software_Practice
             p.example7();
 
         }
+
+        #region class
         class Student
         {
             private int mINumber;
@@ -28,7 +30,7 @@ namespace Application_Software_Practice
             public int getNumber() { return mINumber; }
             public int getScore() { return mIScore; }
         }
-
+        #endregion
         #region method
         void example7()
         {
