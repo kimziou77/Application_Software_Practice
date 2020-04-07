@@ -1,6 +1,6 @@
 ﻿namespace Test1
 {
-    partial class Form1
+    partial class Default
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -28,170 +28,155 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.txtNote = new System.Windows.Forms.TextBox();
-            this.True = new System.Windows.Forms.Button();
-            this.False = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rb1 = new System.Windows.Forms.RadioButton();
-            this.rb2 = new System.Windows.Forms.RadioButton();
-            this.rb3 = new System.Windows.Forms.RadioButton();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Default));
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button = new System.Windows.Forms.Button();
+            this.ESC_timer = new System.Windows.Forms.Timer(this.components);
+            this.EscTimeDisplay = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menu1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.TDB_notify_icon = new System.Windows.Forms.NotifyIcon(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // pictureBox1
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button1.Location = new System.Drawing.Point(0, 310);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(525, 85);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.pictureBox1.Location = new System.Drawing.Point(-5, -4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(363, 374);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
-            // txtNote
+            // label1
             // 
-            this.txtNote.Location = new System.Drawing.Point(12, 12);
-            this.txtNote.Multiline = true;
-            this.txtNote.Name = "txtNote";
-            this.txtNote.Size = new System.Drawing.Size(358, 142);
-            this.txtNote.TabIndex = 1;
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.label1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label1.Font = new System.Drawing.Font("-윤고딕310", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label1.Location = new System.Drawing.Point(89, 59);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(200, 48);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "KIMSUBIN";
             // 
-            // True
+            // button
             // 
-            this.True.Location = new System.Drawing.Point(415, 33);
-            this.True.Name = "True";
-            this.True.Size = new System.Drawing.Size(75, 23);
-            this.True.TabIndex = 2;
-            this.True.Text = "True";
-            this.True.UseVisualStyleBackColor = true;
-            this.True.Click += new System.EventHandler(this.True_click);
+            this.button.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button.Font = new System.Drawing.Font("굴림", 15F);
+            this.button.Location = new System.Drawing.Point(364, 12);
+            this.button.Name = "button";
+            this.button.Size = new System.Drawing.Size(43, 47);
+            this.button.TabIndex = 2;
+            this.button.Text = "N";
+            this.button.UseVisualStyleBackColor = false;
+            this.button.Click += new System.EventHandler(this.button1_Click);
             // 
-            // False
+            // ESC_timer
             // 
-            this.False.Location = new System.Drawing.Point(415, 101);
-            this.False.Name = "False";
-            this.False.Size = new System.Drawing.Size(75, 23);
-            this.False.TabIndex = 3;
-            this.False.Text = "False";
-            this.False.UseVisualStyleBackColor = true;
-            this.False.Click += new System.EventHandler(this.False_click);
+            this.ESC_timer.Tick += new System.EventHandler(this.ESC_timer_Tick);
             // 
-            // groupBox1
+            // EscTimeDisplay
             // 
-            this.groupBox1.Controls.Add(this.rb3);
-            this.groupBox1.Controls.Add(this.rb2);
-            this.groupBox1.Controls.Add(this.rb1);
-            this.groupBox1.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.groupBox1.Location = new System.Drawing.Point(12, 183);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(235, 103);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Font";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            this.EscTimeDisplay.AutoSize = true;
+            this.EscTimeDisplay.Font = new System.Drawing.Font("굴림", 14F);
+            this.EscTimeDisplay.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.EscTimeDisplay.Location = new System.Drawing.Point(375, 83);
+            this.EscTimeDisplay.Name = "EscTimeDisplay";
+            this.EscTimeDisplay.Size = new System.Drawing.Size(23, 24);
+            this.EscTimeDisplay.TabIndex = 3;
+            this.EscTimeDisplay.Text = "0";
+            this.EscTimeDisplay.TextChanged += new System.EventHandler(this.EscTimeDisplay_TextChanged);
             // 
-            // groupBox2
+            // contextMenuStrip1
             // 
-            this.groupBox2.Controls.Add(this.checkBox3);
-            this.groupBox2.Controls.Add(this.checkBox2);
-            this.groupBox2.Controls.Add(this.checkBox1);
-            this.groupBox2.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.groupBox2.Location = new System.Drawing.Point(255, 183);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(235, 103);
-            this.groupBox2.TabIndex = 5;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Style";
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menu1,
+            this.menu2});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(126, 52);
             // 
-            // rb1
+            // menu1
             // 
-            this.rb1.AutoSize = true;
-            this.rb1.Location = new System.Drawing.Point(3, 20);
-            this.rb1.Name = "rb1";
-            this.rb1.Size = new System.Drawing.Size(58, 19);
-            this.rb1.TabIndex = 0;
-            this.rb1.TabStop = true;
-            this.rb1.Text = "돋움";
-            this.rb1.UseVisualStyleBackColor = true;
-            this.rb1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.menu1.Name = "menu1";
+            this.menu1.Size = new System.Drawing.Size(125, 24);
+            this.menu1.Text = "menu1";
             // 
-            // rb2
+            // menu2
             // 
-            this.rb2.AutoSize = true;
-            this.rb2.Location = new System.Drawing.Point(3, 45);
-            this.rb2.Name = "rb2";
-            this.rb2.Size = new System.Drawing.Size(58, 19);
-            this.rb2.TabIndex = 1;
-            this.rb2.TabStop = true;
-            this.rb2.Text = "굴림";
-            this.rb2.UseVisualStyleBackColor = true;
+            this.menu2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menu3});
+            this.menu2.Name = "menu2";
+            this.menu2.Size = new System.Drawing.Size(125, 24);
+            this.menu2.Text = "menu2";
             // 
-            // rb3
+            // menu3
             // 
-            this.rb3.AutoSize = true;
-            this.rb3.Location = new System.Drawing.Point(3, 70);
-            this.rb3.Name = "rb3";
-            this.rb3.Size = new System.Drawing.Size(58, 19);
-            this.rb3.TabIndex = 2;
-            this.rb3.TabStop = true;
-            this.rb3.Text = "궁서";
-            this.rb3.UseVisualStyleBackColor = true;
-            this.rb3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            this.menu3.Name = "menu3";
+            this.menu3.Size = new System.Drawing.Size(139, 26);
+            this.menu3.Text = "menu3";
             // 
-            // checkBox1
+            // pictureBox2
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 21);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(59, 19);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Bold";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(40, 140);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(149, 190);
+            this.pictureBox2.TabIndex = 6;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.form_MouseDown);
+            this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.form_MouseMove);
             // 
-            // checkBox2
+            // TDB_notify_icon
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 46);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(89, 19);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Underline";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.TDB_notify_icon.Icon = ((System.Drawing.Icon)(resources.GetObject("TDB_notify_icon.Icon")));
+            this.TDB_notify_icon.Text = "TDB";
+            this.TDB_notify_icon.Visible = true;
+            this.TDB_notify_icon.DoubleClick += new System.EventHandler(this.TDB_notify_icon_DoubleClick);
             // 
-            // checkBox3
+            // Default
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(6, 71);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(58, 19);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "Italic";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
-            // 
-            // Form1
-            // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(525, 395);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.False);
-            this.Controls.Add(this.True);
-            this.Controls.Add(this.txtNote);
-            this.Controls.Add(this.button1);
-            this.Name = "Form1";
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(431, 319);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.EscTimeDisplay);
+            this.Controls.Add(this.button);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Default";
+            this.Opacity = 0.8D;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "GooseTest";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.TopMost = true;
+            this.TransparencyKey = System.Drawing.SystemColors.HotTrack;
+            this.Load += new System.EventHandler(this.Default_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NoticeForm_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Default_KeyPress);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Default_KeyUp);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.form_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.form_MouseMove);
+            this.Resize += new System.EventHandler(this.Default_Resize);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,18 +184,17 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtNote;
-        private System.Windows.Forms.Button True;
-        private System.Windows.Forms.Button False;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton rb3;
-        private System.Windows.Forms.RadioButton rb2;
-        private System.Windows.Forms.RadioButton rb1;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button;
+        private System.Windows.Forms.Timer ESC_timer;
+        private System.Windows.Forms.Label EscTimeDisplay;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menu1;
+        private System.Windows.Forms.ToolStripMenuItem menu2;
+        private System.Windows.Forms.ToolStripMenuItem menu3;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.NotifyIcon TDB_notify_icon;
     }
 }
 

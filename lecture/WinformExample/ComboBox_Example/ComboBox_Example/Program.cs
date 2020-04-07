@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Test1
+namespace ComboBox_Example
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Test1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Default());
+            Application.Run(new Form1());
         }
     }
 }
