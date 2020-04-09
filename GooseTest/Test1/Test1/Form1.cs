@@ -14,8 +14,9 @@ namespace Test1
 {
     public partial class Default : Form
     {
-        BearMove bearMove = BearMove.FRONT;
-        int dir = 1;
+        int move_num = -1; //이미지갱신을 위한 tick
+        int dir = (int)BearMove.FRONT; //방향
+
         private Point mousePoint;
         public Default()
         {
@@ -184,19 +185,19 @@ namespace Test1
             images[3, 2] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Left3.png");
             images[3, 3] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Left4.png");
             #endregion
-            bearMove++;//enum은 초과하면 자동으로 0으로가던가? 그랬던거같은뎅
-            switch (bearMove)
+            move_num++; move_num %= 4;
+            switch (move_num)
             {
-                case BearMove.FRONT:
+                case (int)BearMove.FRONT:
                     pictureBox2.Image = images[dir,0];
                     break;
-                case BearMove.RIGHT:
+                case (int)BearMove.RIGHT:
                     pictureBox2.Image = images[dir, 1];
                     break;
-                case BearMove.BACK:
+                case (int)BearMove.BACK:
                     pictureBox2.Image = images[dir, 2];
                     break;
-                case BearMove.LEFT:
+                case (int)BearMove.LEFT:
                     pictureBox2.Image = images[dir, 3];
                     break;
             }
@@ -206,7 +207,6 @@ namespace Test1
         {
             Random r = new Random();
             dir = r.Next(0, 4);  // 최소 min 값 부터 최대 max - 1 까지
-
         }
     }
 }
