@@ -160,7 +160,7 @@ namespace Test1
         {
             Image now = pictureBox2.Image;
             Image [,] images =new Image[4,4];
-
+            int speed = 8;
             #region Front Image
             images[0,0]= Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Front1.png");
             images[0,1]= Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Front2.png");
@@ -186,22 +186,40 @@ namespace Test1
             images[3, 3] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Left4.png");
             #endregion
             move_num++; move_num %= 4;
-            switch (move_num)
+
+            switch (dir)
             {
                 case (int)BearMove.FRONT:
-                    pictureBox2.Image = images[dir,0];
+                    Location = new Point(this.Location.X, this.Location.Y + speed);
                     break;
                 case (int)BearMove.RIGHT:
-                    pictureBox2.Image = images[dir, 1];
+                    Location = new Point(this.Location.X + speed, this.Location.Y);
                     break;
                 case (int)BearMove.BACK:
-                    pictureBox2.Image = images[dir, 2];
+                    Location = new Point(this.Location.X, this.Location.Y - speed);
                     break;
                 case (int)BearMove.LEFT:
+                    Location = new Point(this.Location.X - speed, this.Location.Y - speed);
+                    break;
+
+            }
+            switch (move_num)
+            {
+                case 0:
+                    pictureBox2.Image = images[dir,0];
+                    break;
+                case 1:
+                    pictureBox2.Image = images[dir, 1];
+                    break;
+                case 2:
+                    pictureBox2.Image = images[dir, 2];
+                    break;
+                case 3:
                     pictureBox2.Image = images[dir, 3];
                     break;
             }
         }
+
 
         private void button1_Click_1(object sender, EventArgs e)
         {
