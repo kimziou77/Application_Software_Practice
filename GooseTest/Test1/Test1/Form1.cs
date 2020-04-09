@@ -14,7 +14,7 @@ namespace Test1
 {
     public partial class Default : Form
     {
-        int move_num = 1;
+        BearMove bearMove = BearMove.FRONT;
         int dir = 1;
         private Point mousePoint;
         public Default()
@@ -184,24 +184,21 @@ namespace Test1
             images[3, 2] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Left3.png");
             images[3, 3] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Left4.png");
             #endregion
-            ++move_num; move_num%=4;
-
-
-            switch (move_num)
+            bearMove++;//enum은 초과하면 자동으로 0으로가던가? 그랬던거같은뎅
+            switch (bearMove)
             {
-                case 0:
+                case BearMove.FRONT:
                     pictureBox2.Image = images[dir,0];
                     break;
-                case 1:
+                case BearMove.RIGHT:
                     pictureBox2.Image = images[dir, 1];
                     break;
-                case 2:
+                case BearMove.BACK:
                     pictureBox2.Image = images[dir, 2];
                     break;
-                case 3:
+                case BearMove.LEFT:
                     pictureBox2.Image = images[dir, 3];
                     break;
-
             }
         }
 
