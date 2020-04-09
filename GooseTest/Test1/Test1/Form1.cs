@@ -72,17 +72,20 @@ namespace Test1
             }
             else if(e.KeyCode == Keys.A)
             {
-                SoundPlayer wp = new SoundPlayer("../../sound/16478.wav");
-                wp.PlaySync();
+                Thread t = new Thread(new ThreadStart(Howling));
+                t.Start();
                 //wav파일이 들어 있는 경로를 설정해주세요
             }
             else if (e.KeyCode == Keys.S)
             {
-
                 this.WindowState = FormWindowState.Minimized;
             }
         }
-
+        void Howling()
+        {
+            SoundPlayer wp = new SoundPlayer("../../sound/16478.wav");
+            wp.PlaySync();
+        }
         private void ESC_timer_Tick(object sender, EventArgs e)
         {
             //EscTimeDisplay.Text = (int.Parse(EscTimeDisplay.Text) + 1).ToString();
