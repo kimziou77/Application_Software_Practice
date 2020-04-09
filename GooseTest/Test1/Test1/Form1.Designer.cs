@@ -41,6 +41,8 @@
             this.menu3 = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.TDB_notify_icon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.MoveTimer = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -49,9 +51,10 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.pictureBox1.Location = new System.Drawing.Point(-5, -4);
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(363, 374);
+            this.pictureBox1.Size = new System.Drawing.Size(204, 197);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -60,21 +63,21 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.HotTrack;
             this.label1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label1.Font = new System.Drawing.Font("-윤고딕310", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.Font = new System.Drawing.Font("-윤고딕310", 10F);
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label1.Location = new System.Drawing.Point(89, 59);
+            this.label1.Location = new System.Drawing.Point(21, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(200, 48);
+            this.label1.Size = new System.Drawing.Size(57, 19);
             this.label1.TabIndex = 1;
-            this.label1.Text = "KIMSUBIN";
+            this.label1.Text = "KIMYO";
             // 
             // button
             // 
-            this.button.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.button.Font = new System.Drawing.Font("굴림", 15F);
-            this.button.Location = new System.Drawing.Point(364, 12);
+            this.button.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.button.Font = new System.Drawing.Font("굴림", 10F);
+            this.button.Location = new System.Drawing.Point(115, 12);
             this.button.Name = "button";
-            this.button.Size = new System.Drawing.Size(43, 47);
+            this.button.Size = new System.Drawing.Size(33, 33);
             this.button.TabIndex = 2;
             this.button.Text = "N";
             this.button.UseVisualStyleBackColor = false;
@@ -87,9 +90,10 @@
             // EscTimeDisplay
             // 
             this.EscTimeDisplay.AutoSize = true;
+            this.EscTimeDisplay.BackColor = System.Drawing.SystemColors.HotTrack;
             this.EscTimeDisplay.Font = new System.Drawing.Font("굴림", 14F);
-            this.EscTimeDisplay.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.EscTimeDisplay.Location = new System.Drawing.Point(375, 83);
+            this.EscTimeDisplay.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.EscTimeDisplay.Location = new System.Drawing.Point(108, 64);
             this.EscTimeDisplay.Name = "EscTimeDisplay";
             this.EscTimeDisplay.Size = new System.Drawing.Size(23, 24);
             this.EscTimeDisplay.TabIndex = 3;
@@ -131,9 +135,9 @@
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(40, 140);
+            this.pictureBox2.Location = new System.Drawing.Point(12, 46);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(149, 190);
+            this.pictureBox2.Size = new System.Drawing.Size(90, 111);
             this.pictureBox2.TabIndex = 6;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.form_MouseDown);
@@ -146,6 +150,20 @@
             this.TDB_notify_icon.Visible = true;
             this.TDB_notify_icon.DoubleClick += new System.EventHandler(this.TDB_notify_icon_DoubleClick);
             // 
+            // MoveTimer
+            // 
+            this.MoveTimer.Tick += new System.EventHandler(this.MoveTimer_Tick);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(108, 77);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Default
             // 
             this.AllowDrop = true;
@@ -153,7 +171,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(431, 319);
+            this.ClientSize = new System.Drawing.Size(204, 197);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.EscTimeDisplay);
             this.Controls.Add(this.button);
@@ -195,6 +214,8 @@
         private System.Windows.Forms.ToolStripMenuItem menu3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.NotifyIcon TDB_notify_icon;
+        private System.Windows.Forms.Timer MoveTimer;
+        private System.Windows.Forms.Button button1;
     }
 }
 

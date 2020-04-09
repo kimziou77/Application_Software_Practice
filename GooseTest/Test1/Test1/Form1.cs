@@ -8,16 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
-
+using System.Threading;
 
 namespace Test1
 {
     public partial class Default : Form
     {
+        int move_num = 1;
+        int dir = 1;
         private Point mousePoint;
         public Default()
         {
             InitializeComponent();
+            MoveTimer.Interval = 500;
+
+            MoveTimer.Start();
+
         }
         private void form_MouseDown(object sender, MouseEventArgs e)
         {
@@ -144,38 +150,63 @@ namespace Test1
             TDB_notify_icon.Visible = false; //트레이 아이콘을 숨긴다.
             this.WindowState = FormWindowState.Normal;
         }
-        //Bitmap bit;
 
-        //protected override void OnLoad(EventArgs e)
-        //{
+        enum BearMove { FRONT,RIGHT,BACK,LEFT};
+        private void MoveTimer_Tick(object sender, EventArgs e)
+        {
+            Image now = pictureBox2.Image;
+            Image [,] images =new Image[4,4];
 
-        //    bit = new Bitmap("../../img/ogu.gif");
+            #region Front Image
+            images[0,0]= Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Front1.png");
+            images[0,1]= Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Front2.png");
+            images[0,2]= Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Front3.png");
+            images[0,3]= Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Front4.png");
+            #endregion
+            #region Right Image
+            images[1, 0] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Right1.png");
+            images[1, 1] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Right2.png");
+            images[1, 2] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Right3.png");
+            images[1, 3] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Right4.png");
+            #endregion
+            #region Back Image
+            images[2, 0] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Back1.png");
+            images[2, 1] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Back2.png");
+            images[2, 2] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Back3.png");
+            images[2, 3] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Back4.png");
+            #endregion
+            #region Left Image
+            images[3, 0] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Left1.png");
+            images[3, 1] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Left2.png");
+            images[3, 2] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Left3.png");
+            images[3, 3] = Image.FromFile("C:\\Users\\souvenir\\Desktop\\sprite\\Left4.png");
+            #endregion
+            ++move_num; move_num%=4;
 
-        //    ImageAnimator.Animate(bit, new EventHandler(this.OnFrameChanged));
 
-        //    base.OnLoad(e);
+            switch (move_num)
+            {
+                case 0:
+                    pictureBox2.Image = images[dir,0];
+                    break;
+                case 1:
+                    pictureBox2.Image = images[dir, 1];
+                    break;
+                case 2:
+                    pictureBox2.Image = images[dir, 2];
+                    break;
+                case 3:
+                    pictureBox2.Image = images[dir, 3];
+                    break;
 
-        //}
+            }
+        }
 
-        //protected override void OnPaint(PaintEventArgs e)
-        //{
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Random r = new Random();
+            dir = r.Next(0, 4);  // 최소 min 값 부터 최대 max - 1 까지
 
-        //    ImageAnimator.UpdateFrames();
-
-        //    Graphics g = pictureBox1.CreateGraphics();
-
-        //    g.DrawImage(this.bit, new Point(0, 0));
-
-        //    base.OnPaint(e);
-
-        //}
-
-        //private void OnFrameChanged(object sender, EventArgs e)
-        //{
-
-        //    this.Invalidate();
-
-        //}
-
+        }
     }
 }
