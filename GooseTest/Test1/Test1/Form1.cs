@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Test1
 {
@@ -50,6 +51,10 @@ namespace Test1
         private void form_MouseDown(object sender, MouseEventArgs e)
         {
             mousePoint = new Point(e.X, e.Y);
+            if (e.Button == MouseButtons.Right)
+            {
+
+            }
         }
         // 마우스 클릭시 먼저 선언된 mousePoint변수에 현재 마우스 위치값이 들어갑니다.
 
@@ -124,9 +129,7 @@ namespace Test1
                 default:
                     EscTimeDisplay.Text = "0";
                     break;
-
             }
-
         }
 
         private void Default_KeyUp(object sender, KeyEventArgs e)
@@ -248,6 +251,45 @@ namespace Test1
         {
             Random r = new Random();
             dir = r.Next(0, 5);  // 최소 min 값 부터 최대 max - 1 까지
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            name.Text = consoleeee.Text;
+            consoleeee.Text = "";
+        }
+
+        private void menu1_Click(object sender, EventArgs e)
+        {
+            consoleeee.Text = "FIND NOTEPAD...";
+            Thread t = new Thread(new ThreadStart(KillNotePadProcess));
+            t.Start();
+            
+        }
+        void KillNotePadProcess()
+        {
+            Process[] processList = Process.GetProcessesByName("notePad");
+            if (processList.Length > 0)
+            {
+                foreach (Process p in processList)
+                    p.Kill();
+                consoleeee.Text = "KILL SUCCESS";
+            }
+            else
+            {
+                consoleeee.Text = "프로세스가 존재하지 않습니당 ㅜ";
+            }
+        }
+
+        private void stopBtn_Click(object sender, EventArgs e)
+        {
+            dir = 4;
+        }
+
+
+        private void menu3_Click(object sender, EventArgs e)
+        {
+            consoleeee.Text += "3";
         }
     }
 }

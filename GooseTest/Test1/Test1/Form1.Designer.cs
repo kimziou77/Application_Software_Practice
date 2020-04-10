@@ -31,21 +31,23 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Default));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.name = new System.Windows.Forms.Label();
             this.button = new System.Windows.Forms.Button();
             this.ESC_timer = new System.Windows.Forms.Timer(this.components);
             this.EscTimeDisplay = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ActionMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menu1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menu2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menu3 = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.TDB_notify_icon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MoveTimer = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.DirChangeBtn = new System.Windows.Forms.Button();
             this.consoleeee = new System.Windows.Forms.TextBox();
+            this.NameChangeBtn = new System.Windows.Forms.Button();
+            this.stopBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
+            this.ActionMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,24 +61,24 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // label1
+            // name
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label1.Font = new System.Drawing.Font("-윤고딕310", 10F);
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label1.Location = new System.Drawing.Point(21, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 19);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "KIMYO";
+            this.name.AutoSize = true;
+            this.name.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.name.Cursor = System.Windows.Forms.Cursors.Default;
+            this.name.Font = new System.Drawing.Font("-윤고딕310", 10F);
+            this.name.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.name.Location = new System.Drawing.Point(21, 26);
+            this.name.Name = "name";
+            this.name.Size = new System.Drawing.Size(57, 19);
+            this.name.TabIndex = 1;
+            this.name.Text = "KIMYO";
             // 
             // button
             // 
             this.button.BackColor = System.Drawing.SystemColors.HotTrack;
             this.button.Font = new System.Drawing.Font("굴림", 10F);
-            this.button.Location = new System.Drawing.Point(115, 12);
+            this.button.Location = new System.Drawing.Point(171, 0);
             this.button.Name = "button";
             this.button.Size = new System.Drawing.Size(33, 33);
             this.button.TabIndex = 2;
@@ -101,39 +103,42 @@
             this.EscTimeDisplay.Text = "0";
             this.EscTimeDisplay.TextChanged += new System.EventHandler(this.EscTimeDisplay_TextChanged);
             // 
-            // contextMenuStrip1
+            // ActionMenu
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ActionMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ActionMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu1,
             this.menu2});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(126, 52);
+            this.ActionMenu.Name = "contextMenuStrip1";
+            this.ActionMenu.Size = new System.Drawing.Size(164, 52);
             // 
             // menu1
             // 
             this.menu1.Name = "menu1";
-            this.menu1.Size = new System.Drawing.Size(125, 24);
-            this.menu1.Text = "menu1";
+            this.menu1.Size = new System.Drawing.Size(210, 24);
+            this.menu1.Text = "Kill NotePad";
+            this.menu1.Click += new System.EventHandler(this.menu1_Click);
             // 
             // menu2
             // 
             this.menu2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu3});
             this.menu2.Name = "menu2";
-            this.menu2.Size = new System.Drawing.Size(125, 24);
-            this.menu2.Text = "menu2";
+            this.menu2.Size = new System.Drawing.Size(210, 24);
+            this.menu2.Text = "M2";
             // 
             // menu3
             // 
             this.menu3.Name = "menu3";
-            this.menu3.Size = new System.Drawing.Size(139, 26);
-            this.menu3.Text = "menu3";
+            this.menu3.Size = new System.Drawing.Size(114, 26);
+            this.menu3.Text = "M3";
+            this.menu3.Click += new System.EventHandler(this.menu3_Click);
             // 
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.HotTrack;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox2.ContextMenuStrip = this.ActionMenu;
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(12, 46);
@@ -155,24 +160,45 @@
             // 
             this.MoveTimer.Tick += new System.EventHandler(this.MoveTimer_Tick);
             // 
-            // button1
+            // DirChangeBtn
             // 
-            this.button1.Location = new System.Drawing.Point(108, 77);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.DirChangeBtn.Location = new System.Drawing.Point(90, 0);
+            this.DirChangeBtn.Name = "DirChangeBtn";
+            this.DirChangeBtn.Size = new System.Drawing.Size(75, 23);
+            this.DirChangeBtn.TabIndex = 7;
+            this.DirChangeBtn.Text = "Dir";
+            this.DirChangeBtn.UseVisualStyleBackColor = true;
+            this.DirChangeBtn.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // consoleeee
             // 
-            this.consoleeee.Font = new System.Drawing.Font("굴림", 11F);
-            this.consoleeee.Location = new System.Drawing.Point(92, 106);
+            this.consoleeee.Font = new System.Drawing.Font("굴림", 8F);
+            this.consoleeee.Location = new System.Drawing.Point(108, 46);
             this.consoleeee.Multiline = true;
             this.consoleeee.Name = "consoleeee";
-            this.consoleeee.Size = new System.Drawing.Size(100, 90);
+            this.consoleeee.Size = new System.Drawing.Size(96, 72);
             this.consoleeee.TabIndex = 8;
+            // 
+            // NameChangeBtn
+            // 
+            this.NameChangeBtn.Location = new System.Drawing.Point(117, 134);
+            this.NameChangeBtn.Name = "NameChangeBtn";
+            this.NameChangeBtn.Size = new System.Drawing.Size(75, 23);
+            this.NameChangeBtn.TabIndex = 9;
+            this.NameChangeBtn.Text = "Change";
+            this.NameChangeBtn.UseVisualStyleBackColor = true;
+            this.NameChangeBtn.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // stopBtn
+            // 
+            this.stopBtn.Font = new System.Drawing.Font("굴림", 7F);
+            this.stopBtn.Location = new System.Drawing.Point(12, 0);
+            this.stopBtn.Name = "stopBtn";
+            this.stopBtn.Size = new System.Drawing.Size(66, 23);
+            this.stopBtn.TabIndex = 10;
+            this.stopBtn.Text = "STOP!!";
+            this.stopBtn.UseVisualStyleBackColor = true;
+            this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
             // 
             // Default
             // 
@@ -182,12 +208,14 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(204, 197);
+            this.Controls.Add(this.stopBtn);
+            this.Controls.Add(this.NameChangeBtn);
             this.Controls.Add(this.consoleeee);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.DirChangeBtn);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.EscTimeDisplay);
             this.Controls.Add(this.button);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.name);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -205,7 +233,7 @@
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.form_MouseMove);
             this.Resize += new System.EventHandler(this.Default_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.ActionMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -215,19 +243,21 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label name;
         private System.Windows.Forms.Button button;
         private System.Windows.Forms.Timer ESC_timer;
         private System.Windows.Forms.Label EscTimeDisplay;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip ActionMenu;
         private System.Windows.Forms.ToolStripMenuItem menu1;
         private System.Windows.Forms.ToolStripMenuItem menu2;
         private System.Windows.Forms.ToolStripMenuItem menu3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.NotifyIcon TDB_notify_icon;
         private System.Windows.Forms.Timer MoveTimer;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button DirChangeBtn;
         private System.Windows.Forms.TextBox consoleeee;
+        private System.Windows.Forms.Button NameChangeBtn;
+        private System.Windows.Forms.Button stopBtn;
     }
 }
 
