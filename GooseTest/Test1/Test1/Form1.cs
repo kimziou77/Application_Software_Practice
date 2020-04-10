@@ -25,7 +25,28 @@ namespace Test1
 
             MoveTimer.Start();
 
+            this.AllowDrop = true;
+            this.DragEnter += new DragEventHandler(Form1_DragEnter);
+            this.DragDrop += new DragEventHandler(Form1_DragDrop);
+
         }
+        void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            //여기에 통신부분들어가면 좋을 것 같음
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+            {
+                consoleeee.Text = file.ToString();
+            }
+        }
+
+
+
         private void form_MouseDown(object sender, MouseEventArgs e)
         {
             mousePoint = new Point(e.X, e.Y);
@@ -155,7 +176,7 @@ namespace Test1
             this.WindowState = FormWindowState.Normal;
         }
 
-        enum BearMove { FRONT,RIGHT,BACK,LEFT};
+        enum BearMove { FRONT,RIGHT,BACK,LEFT,STAND};
         private void MoveTimer_Tick(object sender, EventArgs e)
         {
             Image now = pictureBox2.Image;
@@ -201,8 +222,11 @@ namespace Test1
                 case (int)BearMove.LEFT:
                     Location = new Point(this.Location.X - speed, this.Location.Y - speed);
                     break;
+                default:
+                    break;
 
             }
+            if (dir > 3) return;
             switch (move_num)
             {
                 case 0:
@@ -220,11 +244,10 @@ namespace Test1
             }
         }
 
-
         private void button1_Click_1(object sender, EventArgs e)
         {
             Random r = new Random();
-            dir = r.Next(0, 4);  // 최소 min 값 부터 최대 max - 1 까지
+            dir = r.Next(0, 5);  // 최소 min 값 부터 최대 max - 1 까지
         }
     }
 }

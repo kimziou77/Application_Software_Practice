@@ -43,6 +43,7 @@
             this.TDB_notify_icon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MoveTimer = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.consoleeee = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -164,6 +165,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
+            // consoleeee
+            // 
+            this.consoleeee.Font = new System.Drawing.Font("굴림", 11F);
+            this.consoleeee.Location = new System.Drawing.Point(92, 106);
+            this.consoleeee.Multiline = true;
+            this.consoleeee.Name = "consoleeee";
+            this.consoleeee.Size = new System.Drawing.Size(100, 90);
+            this.consoleeee.TabIndex = 8;
+            // 
             // Default
             // 
             this.AllowDrop = true;
@@ -172,6 +182,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(204, 197);
+            this.Controls.Add(this.consoleeee);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.EscTimeDisplay);
@@ -216,6 +227,7 @@
         private System.Windows.Forms.NotifyIcon TDB_notify_icon;
         private System.Windows.Forms.Timer MoveTimer;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox consoleeee;
     }
 }
 
