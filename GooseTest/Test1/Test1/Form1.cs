@@ -38,6 +38,7 @@ namespace Test1
 
         void Form1_DragDrop(object sender, DragEventArgs e)
         {
+            //랴ㅣㄸㄴ둥ㄷㄱ 
             //여기에 통신부분들어가면 좋을 것 같음
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (string file in files)
@@ -155,15 +156,10 @@ namespace Test1
         private void Default_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
-
             {
-
                 this.Visible = false; //창을 보이지 않게 한다.
-
                 this.ShowIcon = false; //작업표시줄에서 제거.
-
                 TDB_notify_icon.Visible = true; //트레이 아이콘을 표시한다.
-
             }
         }
 
