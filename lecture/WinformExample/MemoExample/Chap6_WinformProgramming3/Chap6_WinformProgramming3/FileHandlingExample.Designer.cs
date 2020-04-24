@@ -47,7 +47,7 @@
             this.파일FToolStripMenuItem});
             this.mns.Location = new System.Drawing.Point(0, 0);
             this.mns.Name = "mns";
-            this.mns.Size = new System.Drawing.Size(800, 28);
+            this.mns.Size = new System.Drawing.Size(473, 28);
             this.mns.TabIndex = 0;
             this.mns.Text = "menuStrip1";
             // 
@@ -62,7 +62,7 @@
             // tsmiOpen
             // 
             this.tsmiOpen.Name = "tsmiOpen";
-            this.tsmiOpen.Size = new System.Drawing.Size(224, 26);
+            this.tsmiOpen.Size = new System.Drawing.Size(144, 26);
             this.tsmiOpen.Text = "열기(&O)";
             this.tsmiOpen.Click += new System.EventHandler(this.tsmiOpen_Click);
             // 
@@ -74,6 +74,7 @@
             this.btnQuery.TabIndex = 1;
             this.btnQuery.Text = "Query";
             this.btnQuery.UseVisualStyleBackColor = true;
+            this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
             // 
             // btnSave
             // 
@@ -83,6 +84,7 @@
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnExit
             // 
@@ -92,6 +94,7 @@
             this.btnExit.TabIndex = 3;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // ofd
             // 
@@ -120,7 +123,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(473, 177);
             this.Controls.Add(this.dtpTime);
             this.Controls.Add(this.dtpDate);
             this.Controls.Add(this.btnExit);

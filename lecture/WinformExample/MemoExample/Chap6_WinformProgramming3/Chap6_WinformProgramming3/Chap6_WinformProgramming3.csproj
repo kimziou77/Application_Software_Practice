@@ -52,6 +52,12 @@
     <Compile Include="FileHandlingExample.Designer.cs">
       <DependentUpon>FileHandlingExample.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotepadExample.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotepadExample.Designer.cs">
+      <DependentUpon>NotepadExample.cs</DependentUpon>
+    </Compile>
     <Compile Include="OpenFileDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +68,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FileHandlingExample.resx">
       <DependentUpon>FileHandlingExample.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotepadExample.resx">
+      <DependentUpon>NotepadExample.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OpenFileDialog.resx">
       <DependentUpon>OpenFileDialog.cs</DependentUpon>

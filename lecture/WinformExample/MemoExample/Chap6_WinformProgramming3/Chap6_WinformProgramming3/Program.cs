@@ -16,7 +16,10 @@ namespace Chap6_WinformProgramming3
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new OpenFileDialog());
+            //Application.Run(new OpenFileDialog());
+            //Application.Run(new FileHandlingExample());
+            Application.Run(new NotepadExample());
+
         }
     }
 }
