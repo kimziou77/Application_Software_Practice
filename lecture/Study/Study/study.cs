@@ -29,8 +29,10 @@ namespace Study
             //f.GenericCompareExample();
             //f.ChainExample();
             //f.EventExample();
-            //f.DelegateTestAnswer2();
-            f.LinqExample();
+            //f.DelegateTestAnswer2()
+            f.DelegateChainExample()
+            ;
+            //f.LinqExample();
 
         }
     }
@@ -203,7 +205,7 @@ namespace Study
 
         public void DelegateChainExample()
         {
-            //딜리게이트 체인 여러개의 딜리게이트를 연결해서 사용한다.
+            //델리게이트 체인 여러개의 델리게이트를 연결해서 사용한다.
             //+ 로 사슬을 연결한다. 끊어낼때는 - 연산자를 사용하면 된다.
 
             // + 연산자 사용하기
@@ -216,20 +218,20 @@ namespace Study
                 Delegate.Combine(new ThereIsAFire(Call119),
                                  new ThereIsAFire(ShotOut),
                                  new ThereIsAFire(Escape));
-
-
+            Fire("응용소프트웨어실습");
         }
+
         void Call119(string location)
         {
             Console.WriteLine("여보세요, 소방서죠? 불이 났어요!! 주소는 {0} 입니다.", location);
         }
         void ShotOut(string location)
         {
-            Console.WriteLine("피하세요! {0}에 불이 났어요!! ");
+            Console.WriteLine("피하세요! {0}에 불이 났어요!!",location);
         }
         void Escape(string location)
         {
-            Console.WriteLine("{0}에서 어서빨리 나갑시당");
+            Console.WriteLine("{0}에서 어서빨리 나갑시당",location);
         }
 
         public void GenericCompareExample()
