@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace _07_winform_programming5
+namespace RemoteFileAccessProgram
 {
     static class Program
     {
@@ -16,8 +16,7 @@ namespace _07_winform_programming5
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Explorer());
-            //Application.Run(new ThreadExample());
+            Application.Run(new Client());
         }
     }
 }
