@@ -76,7 +76,7 @@ namespace RemoteFileAccessProgram_ver2
                         }
                         catch//읽는것이 실패했다면
                         {
-                            Message("클라이언트로부터 전달된 패킷을 읽는것에 실패하였습니다.");
+                            //Message("클라이언트로부터 전달된 패킷을 읽는것에 실패하였습니다.");
                             m_bConnect = false;
                             continue;
                         }
@@ -124,7 +124,7 @@ namespace RemoteFileAccessProgram_ver2
             }
             catch (ThreadAbortException ex)
             {
-                Message("Server가 이미 Stop된 상태");
+                //Message("Server가 이미 Stop된 상태");
                 return;
             }
             catch (Exception ex)
