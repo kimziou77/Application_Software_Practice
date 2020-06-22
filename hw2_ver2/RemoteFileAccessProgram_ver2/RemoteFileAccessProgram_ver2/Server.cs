@@ -61,6 +61,7 @@ namespace RemoteFileAccessProgram_ver2
                 {
                     if (DEBUGGING) Message("[+] m_bStop");
                     TcpClient client = m_listener.AcceptTcpClient();
+
                     if (client.Connected)//연결된게 맞다면
                     {
                         m_bConnect = true;//사용중 on
@@ -307,6 +308,7 @@ namespace RemoteFileAccessProgram_ver2
                 m_bStop = true;
                 ServerStop();
             }
+
         }
         private void btnPath_Click(object sender, EventArgs e)
         {
