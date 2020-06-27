@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -22,10 +23,12 @@ namespace World_Drwaing
     {
         public IPAddress IP;
         public int PORT;
-        public WorldServer server;
 
-        Dictionary<string, User> connectedUser;//id별 user관리
-        
+        TcpListener server = null; //서버
+        TcpClient clientSocket = null; //소켓
+        static int counter = 0;// 사용자 수
+        public Dictionary<TcpClient, string> clientList = new Dictionary<TcpClient, string>();
+
         public WorldServer()
         {
             InitializeComponent();
@@ -34,41 +37,97 @@ namespace World_Drwaing
         private void WorldServer_Load(object sender, EventArgs e)
         {
             TcpClient TcpClient = new TcpClient();
-            server = this;
             OpenModal();
-            connectedUser = new Dictionary<string, User>();
+            Thread t = new Thread(InitSocket);
+            t.IsBackground = true;
+            t.Start();
         }
-
-        private void ServerStart(object sender, FormClosedEventArgs e)
+        private void InitSocket()
         {
-            try
+            server = new TcpListener(IP, PORT);
+            clientSocket = default(TcpClient);
+            server.Start();
+            Message("서버가 시작되었습니다");
+            while (true)
             {
-                while (true)
+                try
                 {
-                    TcpListener listener = new TcpListener(IP, PORT);
-                    listener.Start();//Close();
-                    TcpClient client = listener.AcceptTcpClient();
-                    User user = new User(client);//해당 클라이언트 작업용 스레드 스타트
-                    user.ReturnToText += new User.appendText(UpdateText);
-                    connectedUser.Add(user.id, user);
-                    MessageBox.Show("연결 성공 ㅋㅋ");
-                    //here to read and Do Something with client ID
+                    clientSocket = server.AcceptTcpClient();
+                    counter++;
+
+                    NetworkStream stream = clientSocket.GetStream();
+                    byte[] buffer = new byte[1024]; //buffer
+
+                    int bytes = stream.Read(buffer, 0, buffer.Length);
+                    string user_name = Encoding.UTF8.GetString(buffer, 0, bytes);
+
+                    clientList.Add(clientSocket, user_name);//client List에 추가
+                    SendMessageAll(user_name + "님이 입장했습니다", "", false);
+                    handleClient h_client = new handleClient();//클라이언트 추가
+                    h_client.OnReceived += new handleClient.MessageDisplayHandler(OnRecived);
+                    h_client.OnDisconnected += new handleClient.DisconnectedHandler(h_client_OnDisconnected);
+                    h_client.startClient(clientSocket, clientList);
                 }
+                catch (SocketException se) { break; }
+                catch (Exception ex) { break; }
             }
-            catch (Exception ee)
+            clientSocket.Close();   //client 소켓 닫기
+            server.Stop();          //server 종료
+        }
+
+
+        void h_client_OnDisconnected(TcpClient clientSocket) // cleint 접속 해제 핸들러
+        {
+            if (clientList.ContainsKey(clientSocket))
+                clientList.Remove(clientSocket);
+        }
+        private void OnReceived(string message, string user_name) // cleint로 부터 받은 데이터
+        {
+            if (message.Equals("leaveChat"))
             {
-                MessageBox.Show(ee.Message);
+                string displayMessage = "leave user : " + user_name;
+                Message(displayMessage);
+                SendMessageAll("leaveChat", user_name, true);
+            }
+            else
+            {
+                string displayMessage = "From client : " + user_name + " : " + message;
+                Message(displayMessage); // Server단에 출력
+                SendMessageAll(message, user_name, true); // 모든 Client에게 전송
             }
         }
 
-        public void Send(string id)//해당 id에게 Send
+        public void SendMessageAll(string message, string user_name, bool flag)
         {
-            connectedUser[id].Send();
+            foreach (var pair in clientList)
+            {
+                TcpClient client = pair.Key as TcpClient;
+                NetworkStream stream = client.GetStream();
+                byte[] buffer = null;
+
+                if (flag)
+                {
+                    if (message.Equals("leaveChat"))
+                        buffer = Encoding.Unicode.GetBytes(user_name + " 님이 대화방을 나갔습니다.");
+                    else
+                        buffer = Encoding.Unicode.GetBytes("[ " + user_name + " ] : " + message);
+                }
+                else
+                {
+                    buffer = Encoding.Unicode.GetBytes(message);
+                }
+                stream.Write(buffer, 0, buffer.Length); // 버퍼 쓰기
+                stream.Flush();
+            }
         }
 
-        private void UpdateText(string str)
+        public void Message(string msg)
         {
-            chattingLog.Text += str + "\r\n";
+            this.Invoke(new MethodInvoker(delegate ()
+            {
+                string message = msg + "\r\n";
+                chattingLog.Text += message;
+            }));
         }
 
         private void OpenModal()
@@ -76,81 +135,7 @@ namespace World_Drwaing
             worldOpen wo = new worldOpen();
             wo.Owner = this;
             wo.ShowDialog();
-            wo.FormClosed += ServerStart;
-        }
-
-        private void WorldServer_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //Dictionary<string, User>.KeyCollection ids = connectedUser.Keys;
-
-            //foreach(string id in ids)
-            //{
-            //    connectedUser[id].networkStream.Close();
-            //    connectedUser[id].workingThread.Abort();
-            //}
-        }
-    }
-
-    public class User
-    {
-        public delegate void appendText(string text);
-        public event appendText ReturnToText;
-        private void labelToText()
-        {
-            ReturnToText("연결");
-        }
-
-        TcpClient client;
-        public Thread workingThread;
-        private byte[] sendBuffer = new byte[1024 * 4];
-        private byte[] readBuffer = new byte[1024 * 4];
-        public NetworkStream networkStream;
-
-        public string id;
-        Packet packet;
-        public Socket WorkingSocket;
-        public readonly int BufferSize;
-        public User(TcpClient client)
-        {
-            this.client = client;
-            networkStream = client.GetStream();
-            //id 읽어오기
-            workingThread = new Thread(new ThreadStart(working));
-
-        }
-        public void working()
-        {
-
-        }
-        void packetInit(Packet packet)
-        {
-            Init p = (Init)packet;
-            this.id = p.id;
-            //send drawing info to client
-            WorldPaint paint = new WorldPaint();
-
-        }
-        public void Message(string msg)
-        {
-            //this.Invoke(new MethodInvoker(delegate ()
-            //{
-            //    string message = msg + "\r\n";
-            //    txtLog.Text += message;
-            //}));
-        }
-        public void Send()
-        {
-            this.networkStream.Write(this.sendBuffer, 0, this.sendBuffer.Length);
-            this.networkStream.Flush();
-            for (int i = 0; i < 1024 * 4; i++)
-            {
-                this.sendBuffer[i] = 0;
-            }
-        }
-        ~User()
-        {
-            networkStream.Close();
-            client.Close();
+            //wo.FormClosed += ServerStart;
         }
     }
 }
