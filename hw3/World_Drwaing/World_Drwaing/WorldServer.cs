@@ -94,6 +94,10 @@ namespace World_Drwaing
                 counter--;
 
             }
+            else if (message.Equals("drawing"))
+            {
+                SendDrawingAll();
+            }
             else
             {
                 user_name = user_name.Substring(0, user_name.IndexOf("$"));
@@ -103,7 +107,24 @@ namespace World_Drwaing
                 SendMessageAll(message, user_name, true); // 모든 Client에게 전송
             }
         }
+        public void SendDrawingAll()
+        {
+            foreach (var pair in clientList)
+            {
+                TcpClient client = pair.Key as TcpClient;
+                NetworkStream stream = client.GetStream();
+                byte[] buffer = null;
 
+                //if (message.Equals("leaveChat"))
+                //    buffer = Encoding.Unicode.GetBytes(user_name + " 님이 퇴장했습니다.");
+                //else
+                //    buffer = Encoding.Unicode.GetBytes("[ " + user_name + " ] : " + message);
+
+                //그림 정보 전달
+                stream.Write(buffer, 0, buffer.Length); // 버퍼 쓰기
+                stream.Flush();
+            }
+        }
         public void SendMessageAll(string message, string user_name, bool flag)
         {
             foreach (var pair in clientList)
@@ -135,7 +156,6 @@ namespace World_Drwaing
                 string message = msg + "\r\n";
                 chattingLog.Text += message;
             }));
-            chattingLog.ScrollToCaret();
         }
 
         private void OpenModal()

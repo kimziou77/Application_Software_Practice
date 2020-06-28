@@ -37,7 +37,7 @@ namespace Client
         Point imgPoint;
 
         MyDrawings md;
-        
+
         public world_Client()
         {
             InitializeComponent();
@@ -65,13 +65,13 @@ namespace Client
                 clientSocket.Connect(IP, PORT);
                 stream = clientSocket.GetStream();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("서버가 실행중이 아닙니다.", "연결실패!");
                 Application.Exit();
             }
             Message("채팅서버에 연결되었습니다");
-            byte[] buffer = Encoding.UTF8.GetBytes(ID+"$");
+            byte[] buffer = Encoding.UTF8.GetBytes(ID + "$");
             stream.Write(buffer, 0, buffer.Length);
             stream.Flush();
             Thread t_handler = new Thread(GetMessage);
@@ -91,13 +91,13 @@ namespace Client
                     string message = Encoding.Unicode.GetString(buffer, 0, bytes);
                     Message(message);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                     Disconnect();
                     break;
                 }
-                
+
             }
         }
 
@@ -123,8 +123,8 @@ namespace Client
                 stream.Write(buffer, 0, buffer.Length);
                 stream.Flush();
             }
-            catch{  }
-            
+            catch { }
+
             Application.ExitThread();
             Environment.Exit(0);
         }
@@ -285,7 +285,7 @@ namespace Client
             btnColor1.BackColor = cld.Color;
 
             if (!btnFill.Checked)
-                chatBoard.Text = "채우기 버튼을 누르고 다시 시도하세요";
+                chatBoard.Text += "채우기 버튼을 누르고 다시 시도하세요\r\n";
             md.inner = btnColor1.BackColor;
         }
 
@@ -308,7 +308,6 @@ namespace Client
             if (ratio == 1)
             {
                 zoomPoint = e.Location;
-                lbZoom.Text = zoomPoint.X + " ," + zoomPoint.Y;
             }
             if (lines > 0)
             {
@@ -337,7 +336,6 @@ namespace Client
 
             clickPoint = e.Location;
             movePoint = e.Location;
-            txtCP.Text = clickPoint.X + " , " + clickPoint.Y;
         }
         private void drawingBoard_MouseMove(object sender, MouseEventArgs e)
         {
@@ -421,6 +419,9 @@ namespace Client
 
             drawingBoard.Invalidate(true);
             drawingBoard.Update();
+
+            //서버에 패킷전송
+
         }
         private void drawingBoard_MouseUp(object sender, MouseEventArgs e)
         {
@@ -428,6 +429,7 @@ namespace Client
             if (md.line == true) md.nline++;
             if (md.rect == true) md.nrect++;
             if (md.circle == true) md.ncircle++;
+            md.nShape++;
             md.start.X = 0;
             md.start.Y = 0;
             md.finish.X = 0;
@@ -435,104 +437,113 @@ namespace Client
             //chatBoard.Text = md.MyDrawingInfo();
             clickPoint.X = e.X;
             clickPoint.Y = e.Y;
-            txtCP.Text = clickPoint.X + " , " + clickPoint.Y;
         }
         #endregion
 
         #region 그림
         private void drawingBoard_Paint(object sender, PaintEventArgs e)
         {
-            //chatBoard.Text = md.MyDrawingInfo();
-            //부드럽게 그려줌
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            //chatting.Text = md.nline.ToString() + " " + md.nrect.ToString() + " " + md.ncircle.ToString() ;
-
-            //현재 저장된 선, 사각형, 원 그리기
-            for(int i = 0; i <= md.nPencil; i++)
+            for(int i=0; i<=md.nShape; i++)
             {
-                if (md.mypencils[i].GetPen() == null) break;
-                List<Point> draw= new List<Point>();
-                Pen monami = md.mypencils[i].GetPen();
-                monami.Width = md.mypencils[i].GetThick();
-                monami.Color = md.mypencils[i].GetOutter();
                 try
                 {
-                    foreach(Point paint in md.mypencils[i].GetList())
+                    switch (md.myshapes[i].type)
                     {
-                        Point tmp = paint;
-                        tmp.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - paint.X) * ratio);
-                        tmp.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - paint.Y) * ratio);
-                        draw.Add(tmp);
+                        case ShapeType.PENCIL:
+                            {
+                                if (md.myshapes[i].GetPen() == null) break;
+                                List<Point> draw = new List<Point>();
+                                Pen monami = md.myshapes[i].GetPen();
+                                monami.Width = md.myshapes[i].GetThick();
+                                monami.Color = md.myshapes[i].GetOutter();
+
+                                try
+                                {
+                                    foreach (Point paint in ((MyPencil)md.myshapes[i]).GetList())
+                                    {
+                                        Point tmp = paint;
+                                        tmp.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - paint.X) * ratio);
+                                        tmp.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - paint.Y) * ratio);
+                                        draw.Add(tmp);
+                                    }
+                                    e.Graphics.DrawLines(monami, draw.ToArray());
+                                }
+                                catch { }
+
+                                break;
+                            }
+                        case ShapeType.LINE:
+                            {
+                                if (md.myshapes[i].GetPen() == null) break;
+
+                                MyLines line = (MyLines)md.myshapes[i];
+
+                                line.LPen.Width = line.GetThick();
+                                line.LPen.Color = line.GetOutter();
+
+                                Point p1 = line.getPoint1();
+                                p1.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - p1.X) * ratio);
+                                p1.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - p1.Y) * ratio);
+
+                                Point p2 = line.getPoint2();
+                                p2.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - p2.X) * ratio);
+                                p2.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - p2.Y) * ratio);
+
+                                e.Graphics.DrawLine(((MyLines)md.myshapes[i]).LPen, p1, p2);
+                                break;
+                            }
+                        case ShapeType.RECT:
+                            {
+                                if (md.myshapes[i].GetPen() == null) break;
+                                Rectangle myrect = ((MyRect)md.myshapes[i]).GetRect();
+
+                                myrect.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - myrect.X) * ratio);
+                                myrect.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - myrect.Y) * ratio);
+                                myrect.Width = (int)Math.Round(myrect.Width * ratio);
+                                myrect.Height = (int)Math.Round(myrect.Height * ratio);
+
+                                if (!md.myrect[i].IsColored())
+                                {
+                                    SolidBrush brush = new SolidBrush(md.myshapes[i].GetInner());
+                                    brush.Color = md.myshapes[i].GetInner();
+                                    e.Graphics.FillRectangle(brush, myrect);
+                                }
+
+                                Pen tmpPen = md.myshapes[i].GetPen();
+                                tmpPen.Width = md.myshapes[i].GetThick();
+                                tmpPen.Color = md.myshapes[i].GetOutter();
+                                e.Graphics.DrawRectangle(tmpPen, myrect);
+                                break;
+                            }
+                        case ShapeType.CIRCLE:
+                            {
+                                if (md.myshapes[i].GetPen() == null) break;
+
+                                Rectangle mycircle = ((MyCircle)md.myshapes[i]).getRectC();
+                                mycircle.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - mycircle.X) * ratio);
+                                mycircle.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - mycircle.Y) * ratio);
+                                mycircle.Width = (int)Math.Round(mycircle.Width * ratio);
+                                mycircle.Height = (int)Math.Round(mycircle.Height * ratio);
+
+                                if (!md.myshapes[i].IsColored())
+                                {
+                                    SolidBrush brush = new SolidBrush(md.myshapes[i].GetInner());
+                                    brush.Color = md.myshapes[i].GetInner();
+                                    e.Graphics.FillEllipse(brush, mycircle);
+                                }
+                                Pen tmpPen2 = md.myshapes[i].GetPen();
+                                tmpPen2.Width = md.myshapes[i].GetThick();
+                                tmpPen2.Color = md.myshapes[i].GetOutter();
+                                e.Graphics.DrawEllipse(tmpPen2, mycircle);
+                                break;
+                            }
+                        default: { break; }
                     }
-                    e.Graphics.DrawLines(monami, draw.ToArray());
                 }
-                catch { }
-
+                catch (Exception ex) { chatting.Text += ex.Message; }
             }
-            for (int i = 0; i <= md.nline; i++)
-            {
-                if (md.mylines[i].GetPen() == null) break;
-
-                md.mylines[i].LPen.Width = md.mylines[i].GetThick();
-                md.mylines[i].LPen.Color = md.mylines[i].GetOutter();
-
-                Point p1 = md.mylines[i].getPoint1();
-                p1.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - p1.X) * ratio);
-                p1.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - p1.Y) * ratio);
-
-                Point p2 = md.mylines[i].getPoint2();
-                p2.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - p2.X) * ratio);
-                p2.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - p2.Y) * ratio);
-
-                e.Graphics.DrawLine(md.mylines[i].LPen , p1, p2);
-            }
-
-            for (int i = 0; i <= md.nrect; i++)
-            {
-                if (md.myrect[i].GetPen() == null) break;
-                Rectangle myrect = md.myrect[i].GetRect();
-
-                myrect.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - myrect.X) * ratio);
-                myrect.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - myrect.Y) * ratio);
-                myrect.Width = (int)Math.Round(myrect.Width*ratio);
-                myrect.Height = (int)Math.Round(myrect.Height * ratio);
-                
-                if (!md.myrect[i].IsColored())
-                {
-                    SolidBrush brush = new SolidBrush(md.myrect[i].GetInner());
-                    brush.Color = md.myrect[i].GetInner();
-                    e.Graphics.FillRectangle(brush, myrect);
-                }
-
-                Pen tmpPen = md.myrect[i].GetPen();
-                tmpPen.Width = md.myrect[i].GetThick();
-                tmpPen.Color = md.myrect[i].GetOutter();
-                e.Graphics.DrawRectangle(tmpPen, myrect);
-            }
-            for (int i = 0; i <= md.ncircle; i++)
-            {
-                if (md.mycircle[i].GetPen() == null) break;
-
-                Rectangle mycircle = md.mycircle[i].getRectC();
-
-                mycircle.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - mycircle.X) * ratio);
-                mycircle.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - mycircle.Y) * ratio);
-                mycircle.Width = (int)Math.Round(mycircle.Width * ratio);
-                mycircle.Height = (int)Math.Round(mycircle.Height * ratio);
-
-                if (!md.mycircle[i].IsColored())
-                {
-                    SolidBrush brush = new SolidBrush(md.mycircle[i].GetInner());
-                    brush.Color = md.mycircle[i].GetInner();
-                    e.Graphics.FillEllipse(brush, mycircle);
-                }
-                Pen tmpPen2 = md.mycircle[i].GetPen();
-                tmpPen2.Width = md.mycircle[i].GetThick();
-                tmpPen2.Color = md.mycircle[i].GetOutter();
-                e.Graphics.DrawEllipse(tmpPen2, mycircle);
-            }
-            //chatBoard.Text = md.MyDrawingInfo();
         }
         #endregion
 
@@ -547,13 +558,13 @@ namespace Client
                 stream.Flush();
                 chatting.Text = "";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 Disconnect();
                 Close();
             }
-            
+
         }
         private void chatting_KeyUp(object sender, KeyEventArgs e)
         {
@@ -576,5 +587,5 @@ namespace Client
             }));
         }
     }
-    
+
 }

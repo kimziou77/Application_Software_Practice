@@ -7,15 +7,28 @@ using System.Threading.Tasks;
 
 namespace Packet_WorldDrawing
 {
+    public enum ShapeType
+    {
+        PENCIL,
+        LINE,
+        RECT,
+        CIRCLE
+    }
+
     public class MyShape
     {
         private bool Colored;
         private Color inner;
         private Color outter;
+        public ShapeType type;
         private Pen pen;
         int thick;
 
         #region setter
+        public void SetType(ShapeType type)
+        {
+            this.type = type;
+        }
         public void SetInner(Color inner)
         {
             this.inner = inner;

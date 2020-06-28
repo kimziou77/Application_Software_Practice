@@ -16,6 +16,7 @@ namespace Packet_WorldDrawing
         private Rectangle rectC;
         public MyCircle()
         {
+            SetType(ShapeType.CIRCLE);
             rectC = new Rectangle();
         }
 

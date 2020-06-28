@@ -12,6 +12,7 @@ namespace Packet_WorldDrawing
         private List<Point> pointList;
         public MyPencil()
         {
+            SetType(ShapeType.PENCIL);
             pointList = new List<Point>();
         }
         public void setPencil(Point current, Pen pen, int thick, Color outter)

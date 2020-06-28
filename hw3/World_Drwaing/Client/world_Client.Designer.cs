@@ -53,12 +53,7 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.cld = new System.Windows.Forms.ColorDialog();
             this.drawingBoard = new Client.DoubleBufferPanel();
-            this.lbZoom = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtCP = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
-            this.drawingBoard.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -281,10 +276,6 @@
             // drawingBoard
             // 
             this.drawingBoard.BackColor = System.Drawing.Color.White;
-            this.drawingBoard.Controls.Add(this.lbZoom);
-            this.drawingBoard.Controls.Add(this.label2);
-            this.drawingBoard.Controls.Add(this.txtCP);
-            this.drawingBoard.Controls.Add(this.label1);
             this.drawingBoard.Dock = System.Windows.Forms.DockStyle.Top;
             this.drawingBoard.Location = new System.Drawing.Point(0, 47);
             this.drawingBoard.Name = "drawingBoard";
@@ -294,40 +285,6 @@
             this.drawingBoard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawingBoard_MouseDown);
             this.drawingBoard.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawingBoard_MouseMove);
             this.drawingBoard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawingBoard_MouseUp);
-            // 
-            // lbZoom
-            // 
-            this.lbZoom.AutoSize = true;
-            this.lbZoom.Location = new System.Drawing.Point(540, 44);
-            this.lbZoom.Name = "lbZoom";
-            this.lbZoom.Size = new System.Drawing.Size(0, 15);
-            this.lbZoom.TabIndex = 10;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(427, 44);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 15);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "ZoomPoint :";
-            // 
-            // txtCP
-            // 
-            this.txtCP.AutoSize = true;
-            this.txtCP.Location = new System.Drawing.Point(540, 14);
-            this.txtCP.Name = "txtCP";
-            this.txtCP.Size = new System.Drawing.Size(0, 15);
-            this.txtCP.TabIndex = 8;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(433, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 15);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "ClickPoint : ";
             // 
             // world_Client
             // 
@@ -346,8 +303,6 @@
             this.Load += new System.EventHandler(this.world_Client_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.drawingBoard.ResumeLayout(false);
-            this.drawingBoard.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -378,9 +333,5 @@
         private System.Windows.Forms.ToolStripMenuItem line4;
         private System.Windows.Forms.ToolStripMenuItem line5;
         private System.Windows.Forms.ToolStripButton btnColor2;
-        private System.Windows.Forms.Label txtCP;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lbZoom;
-        private System.Windows.Forms.Label label2;
     }
 }

@@ -14,6 +14,7 @@ namespace Packet_WorldDrawing
 
         public MyRect()
         {
+            SetType(ShapeType.RECT);
             rect = new Rectangle();
         }
         public void setRect(Point start, Point finish ,Pen pen,int thick,Color outter)

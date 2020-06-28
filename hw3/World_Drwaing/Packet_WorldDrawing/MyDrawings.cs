@@ -26,16 +26,18 @@ namespace Packet_WorldDrawing
         public int nline;
         public int nrect;
         public int ncircle;
+        public int nShape;
+
         public int thick;
 
         public Color inner;
         public Color outter;
 
-
         public MyLines[] mylines;
         public MyRect[] myrect;
         public MyCircle[] mycircle;
         public MyPencil[] mypencils;
+        public MyShape[] myshapes;
 
         public MyDrawings()
         {
@@ -63,6 +65,7 @@ namespace Packet_WorldDrawing
             mylines = new MyLines[100];
             myrect = new MyRect[100];
             mycircle = new MyCircle[100];
+            myshapes = new MyShape[400];
 
             nPencil = 0;
             nline = 0;
@@ -103,6 +106,7 @@ namespace Packet_WorldDrawing
         public void SetMyPencil()
         {
             mypencils[nPencil].setPencil(finish,pen, thick, outter);
+            myshapes[nShape] = mypencils[nPencil];
         }
         public void SetMyLine()
         {
@@ -110,6 +114,7 @@ namespace Packet_WorldDrawing
                 mylines[nline].setPoint(start, finish, pen,thick,outter);
             else
                 mylines[nline].setPoint(start, finish, pen, thick, outter,inner);
+            myshapes[nShape] = mylines[nline];
         }
 
         public void SetMyRect()
@@ -117,16 +122,8 @@ namespace Packet_WorldDrawing
             if(!Colored)
                 myrect[nrect].setRect(start, finish, pen,thick,outter);
             else
-            {
                 myrect[nrect].setRect(start, finish, pen, thick, outter, inner);
-            }
-        }
-        public void SetMyRect(Color inner)
-        {
-            if(!Colored)
-                myrect[nrect].setRect(start, finish, pen, thick, outter);
-            else
-                myrect[nrect].setRect(start, finish, pen, thick, outter,inner);
+            myshapes[nShape] = myrect[nrect];
         }
 
         public void SetMyCircle()
@@ -135,6 +132,7 @@ namespace Packet_WorldDrawing
                 mycircle[ncircle].setRectC(start, finish, pen,thick, outter);
             else
                 mycircle[ncircle].setRectC(start, finish, pen, thick, inner, outter);
+            myshapes[nShape] = mycircle[ncircle];
         }
 
     }

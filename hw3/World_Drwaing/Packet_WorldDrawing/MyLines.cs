@@ -18,6 +18,7 @@ namespace Packet_WorldDrawing
         public Pen LPen;
         public MyLines()
         {
+            SetType(ShapeType.LINE);
             point[0] = new Point();
             point[1] = new Point();
         }
