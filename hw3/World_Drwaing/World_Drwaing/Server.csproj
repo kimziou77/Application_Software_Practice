@@ -49,6 +49,7 @@
     <Compile Include="DoubleBufferPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="handleClient.cs" />
     <Compile Include="WorldServer.cs">
       <SubType>Form</SubType>
     </Compile>

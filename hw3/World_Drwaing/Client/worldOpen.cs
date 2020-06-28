@@ -25,7 +25,13 @@ namespace World_Drwaing
         {
             world_Client wc = (world_Client)Owner;
             int port = int.Parse(txtPort.Text);
+            if (txtID.Text.Length <= 0)
+            {
+                MessageBox.Show("ID를 입력해주세요.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtID.Focus();
+                return;
 
+            }
             if (port < 0 || port > 65535)
             {
                 MessageBox.Show("잘못된 포트번호 입니다.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -43,6 +49,12 @@ namespace World_Drwaing
             wc.ID = txtID.Text;
 
             this.Close();
+        }
+
+        private void txtID_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btnOpen_Click(sender, e);
         }
     }
 }

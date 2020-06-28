@@ -19,20 +19,25 @@ namespace Packet_WorldDrawing
             rectC = new Rectangle();
         }
 
-        public void setRectC(Point start, Point finish, Pen pen)
+        public void setRectC(Point start, Point finish, Pen pen,int thick,Color outter)
         {
-            Colored = false;
+            SetColored(false);
             rectC.X = Math.Min(start.X, finish.X);
             rectC.Y = Math.Min(start.Y, finish.Y);
             rectC.Width = Math.Abs(start.X - finish.X);
             rectC.Height = Math.Abs(start.Y - finish.Y);
             SetPen(pen);
+            SetThick(thick);
+            SetOutter(outter);
         }
-
-        public void setRectC(Point start, Point finish, Pen pen,Color inner , Color outter)
+        public void SetRectC(Rectangle r)
         {
-            Colored = true;
-            setRectC(start, finish, pen);
+            rectC = r;
+        }
+        public void setRectC(Point start, Point finish, Pen pen,int thick,Color inner , Color outter)
+        {
+            SetColored(true);
+            setRectC(start, finish, pen,thick,outter);
             SetInner(inner);
             SetOutter(outter);
         }

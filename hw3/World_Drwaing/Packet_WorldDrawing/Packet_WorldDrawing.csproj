@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="MyPencil.cs" />
     <Compile Include="MyShape.cs" />
     <Compile Include="MyDrawings.cs" />
     <Compile Include="MyCircle.cs" />

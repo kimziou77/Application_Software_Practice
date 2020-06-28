@@ -22,13 +22,34 @@ namespace Packet_WorldDrawing
             point[1] = new Point();
         }
         //setter
-        public void setPoint(Point start, Point finish, Pen pen)
+        public void SetLine(Point[] r)
         {
+            point[0] = r[0];
+            point[1] = r[1];
+        }
+        public void setPoint(Point start, Point finish, Pen pen,int thick,Color outter)
+        {
+            SetColored(false);
             point[0] = start;
             point[1] = finish;
             LPen = pen;
             SetPen(pen);
+            SetThick(thick);
+            SetOutter(outter);
         }
+        public void setPoint(Point start, Point finish, Pen pen, int thick, Color outter,Color inner)
+        {
+            SetColored(true);
+            point[0] = start;
+            point[1] = finish;
+            LPen = pen;
+            SetPen(pen);
+            SetThick(thick);
+            SetOutter(outter);
+            SetInner(inner);
+            
+        }
+
 
         //getter
         public Point getPoint1()

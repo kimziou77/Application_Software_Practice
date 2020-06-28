@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1 = new World_Drwaing.DoubleBufferPanel();
             this.chattingLog = new System.Windows.Forms.TextBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.SuspendLayout();
@@ -47,6 +47,7 @@
             this.chattingLog.Location = new System.Drawing.Point(0, 291);
             this.chattingLog.Multiline = true;
             this.chattingLog.Name = "chattingLog";
+            this.chattingLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.chattingLog.Size = new System.Drawing.Size(800, 159);
             this.chattingLog.TabIndex = 0;
             // 
@@ -69,7 +70,6 @@
             this.Controls.Add(this.panel1);
             this.Name = "WorldServer";
             this.Text = "세계그림판_서버";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorldServer_FormClosing);
             this.Load += new System.EventHandler(this.WorldServer_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -78,7 +78,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private World_Drwaing.DoubleBufferPanel panel1;
         private System.Windows.Forms.TextBox chattingLog;
         private System.Windows.Forms.Splitter splitter1;
     }

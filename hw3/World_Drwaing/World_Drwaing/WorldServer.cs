@@ -62,9 +62,11 @@ namespace World_Drwaing
                     string user_name = Encoding.UTF8.GetString(buffer, 0, bytes);
 
                     clientList.Add(clientSocket, user_name);//client List에 추가
+                    user_name = user_name.Substring(0, user_name.Length - 1);
+                    Message(user_name + "님이 입장했습니다.");
                     SendMessageAll(user_name + "님이 입장했습니다", "", false);
                     handleClient h_client = new handleClient();//클라이언트 추가
-                    h_client.OnReceived += new handleClient.MessageDisplayHandler(OnRecived);
+                    h_client.OnReceived += new handleClient.MessageDisplayHandler(OnReceived);
                     h_client.OnDisconnected += new handleClient.DisconnectedHandler(h_client_OnDisconnected);
                     h_client.startClient(clientSocket, clientList);
                 }
@@ -85,13 +87,18 @@ namespace World_Drwaing
         {
             if (message.Equals("leaveChat"))
             {
-                string displayMessage = "leave user : " + user_name;
+                user_name = user_name.Substring(0, user_name.Length - 1);
+                string displayMessage = user_name + "님이 퇴장하였습니다.";
                 Message(displayMessage);
                 SendMessageAll("leaveChat", user_name, true);
+                counter--;
+
             }
             else
             {
-                string displayMessage = "From client : " + user_name + " : " + message;
+                user_name = user_name.Substring(0, user_name.IndexOf("$"));
+                //message = message.Substring(0, message.IndexOf("\r"));
+                string displayMessage = user_name + " : " + message;
                 Message(displayMessage); // Server단에 출력
                 SendMessageAll(message, user_name, true); // 모든 Client에게 전송
             }
@@ -108,7 +115,7 @@ namespace World_Drwaing
                 if (flag)
                 {
                     if (message.Equals("leaveChat"))
-                        buffer = Encoding.Unicode.GetBytes(user_name + " 님이 대화방을 나갔습니다.");
+                        buffer = Encoding.Unicode.GetBytes(user_name + " 님이 퇴장했습니다.");
                     else
                         buffer = Encoding.Unicode.GetBytes("[ " + user_name + " ] : " + message);
                 }
@@ -128,6 +135,7 @@ namespace World_Drwaing
                 string message = msg + "\r\n";
                 chattingLog.Text += message;
             }));
+            chattingLog.ScrollToCaret();
         }
 
         private void OpenModal()

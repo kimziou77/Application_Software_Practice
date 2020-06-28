@@ -9,11 +9,13 @@ namespace Packet_WorldDrawing
 {
     public class MyShape
     {
-        public bool Colored;
+        private bool Colored;
         private Color inner;
         private Color outter;
         private Pen pen;
+        int thick;
 
+        #region setter
         public void SetInner(Color inner)
         {
             this.inner = inner;
@@ -26,6 +28,17 @@ namespace Packet_WorldDrawing
         {
             this.pen = pen;
         }
+        public void SetThick(int thick)
+        {
+            this.thick = thick;
+        }
+        public void SetColored(bool colored)
+        {
+            this.Colored = colored;
+        }
+        #endregion
+
+        #region Getter
         public Color GetInner()
         {
             return inner;
@@ -36,11 +49,16 @@ namespace Packet_WorldDrawing
         }
         public int GetThick()
         {
-            return (int)pen.Width;
+            return thick;
         }
         public Pen GetPen()
         {
-            return pen;
+            return this.pen;
         }
+        public bool IsColored()
+        {
+            return Colored;
+        }
+        #endregion
     }
 }

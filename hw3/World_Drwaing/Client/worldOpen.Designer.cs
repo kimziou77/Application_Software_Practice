@@ -68,6 +68,7 @@
             this.txtID.Name = "txtID";
             this.txtID.Size = new System.Drawing.Size(246, 25);
             this.txtID.TabIndex = 3;
+            this.txtID.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtID_KeyUp);
             // 
             // ID
             // 

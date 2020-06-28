@@ -53,7 +53,12 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.cld = new System.Windows.Forms.ColorDialog();
             this.drawingBoard = new Client.DoubleBufferPanel();
+            this.lbZoom = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtCP = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
+            this.drawingBoard.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -68,7 +73,7 @@
             this.btnColor2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(615, 47);
+            this.toolStrip1.Size = new System.Drawing.Size(620, 47);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -223,18 +228,19 @@
             this.chatBoard.Multiline = true;
             this.chatBoard.Name = "chatBoard";
             this.chatBoard.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.chatBoard.Size = new System.Drawing.Size(615, 105);
+            this.chatBoard.Size = new System.Drawing.Size(620, 105);
             this.chatBoard.TabIndex = 0;
             // 
             // btnSend
             // 
             this.btnSend.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSend.Location = new System.Drawing.Point(502, 395);
+            this.btnSend.Location = new System.Drawing.Point(507, 395);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(113, 34);
+            this.btnSend.Size = new System.Drawing.Size(113, 56);
             this.btnSend.TabIndex = 4;
             this.btnSend.Text = "say";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // chatting
             // 
@@ -243,14 +249,15 @@
             this.chatting.Multiline = true;
             this.chatting.Name = "chatting";
             this.chatting.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.chatting.Size = new System.Drawing.Size(502, 34);
+            this.chatting.Size = new System.Drawing.Size(507, 56);
             this.chatting.TabIndex = 5;
+            this.chatting.KeyUp += new System.Windows.Forms.KeyEventHandler(this.chatting_KeyUp);
             // 
             // splitter1
             // 
             this.splitter1.Location = new System.Drawing.Point(0, 395);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 34);
+            this.splitter1.Size = new System.Drawing.Size(3, 56);
             this.splitter1.TabIndex = 6;
             this.splitter1.TabStop = false;
             // 
@@ -274,21 +281,59 @@
             // drawingBoard
             // 
             this.drawingBoard.BackColor = System.Drawing.Color.White;
+            this.drawingBoard.Controls.Add(this.lbZoom);
+            this.drawingBoard.Controls.Add(this.label2);
+            this.drawingBoard.Controls.Add(this.txtCP);
+            this.drawingBoard.Controls.Add(this.label1);
             this.drawingBoard.Dock = System.Windows.Forms.DockStyle.Top;
             this.drawingBoard.Location = new System.Drawing.Point(0, 47);
             this.drawingBoard.Name = "drawingBoard";
-            this.drawingBoard.Size = new System.Drawing.Size(615, 243);
+            this.drawingBoard.Size = new System.Drawing.Size(620, 243);
             this.drawingBoard.TabIndex = 1;
             this.drawingBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.drawingBoard_Paint);
             this.drawingBoard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawingBoard_MouseDown);
             this.drawingBoard.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawingBoard_MouseMove);
             this.drawingBoard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawingBoard_MouseUp);
             // 
+            // lbZoom
+            // 
+            this.lbZoom.AutoSize = true;
+            this.lbZoom.Location = new System.Drawing.Point(540, 44);
+            this.lbZoom.Name = "lbZoom";
+            this.lbZoom.Size = new System.Drawing.Size(0, 15);
+            this.lbZoom.TabIndex = 10;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(427, 44);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(89, 15);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "ZoomPoint :";
+            // 
+            // txtCP
+            // 
+            this.txtCP.AutoSize = true;
+            this.txtCP.Location = new System.Drawing.Point(540, 14);
+            this.txtCP.Name = "txtCP";
+            this.txtCP.Size = new System.Drawing.Size(0, 15);
+            this.txtCP.TabIndex = 8;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(433, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 15);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "ClickPoint : ";
+            // 
             // world_Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 429);
+            this.ClientSize = new System.Drawing.Size(620, 451);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.chatting);
             this.Controls.Add(this.btnSend);
@@ -297,9 +342,12 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "world_Client";
             this.Text = "세계그림판";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.world_Client_FormClosing);
             this.Load += new System.EventHandler(this.world_Client_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.drawingBoard.ResumeLayout(false);
+            this.drawingBoard.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -330,5 +378,9 @@
         private System.Windows.Forms.ToolStripMenuItem line4;
         private System.Windows.Forms.ToolStripMenuItem line5;
         private System.Windows.Forms.ToolStripButton btnColor2;
+        private System.Windows.Forms.Label txtCP;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbZoom;
+        private System.Windows.Forms.Label label2;
     }
 }

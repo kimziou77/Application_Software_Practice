@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Packet_WorldDrawing;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace World_Drwaing
             Thread t_hanlder = new Thread(doChat);
             t_hanlder.IsBackground = true;
             t_hanlder.Start();
+
         }
 
         public delegate void MessageDisplayHandler(string message, string user_name);
@@ -29,6 +31,9 @@ namespace World_Drwaing
 
         public delegate void DisconnectedHandler(TcpClient clientSocket);
         public event DisconnectedHandler OnDisconnected;
+
+        public delegate void DrawingMessage(MyDrawings md);
+        public event DrawingMessage OnDrawingMessage;
 
         private void doChat()
         {

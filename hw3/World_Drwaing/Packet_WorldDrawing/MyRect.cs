@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,19 +16,25 @@ namespace Packet_WorldDrawing
         {
             rect = new Rectangle();
         }
-        public void setRect(Point start, Point finish ,Pen pen)
+        public void setRect(Point start, Point finish ,Pen pen,int thick,Color outter)
         {
-            Colored = false;
+            SetColored(false);
             rect.X = Math.Min(start.X, finish.X);
             rect.Y = Math.Min(start.Y, finish.Y);
             rect.Height = Math.Abs(start.Y - finish.Y);
             rect.Width = Math.Abs(start.X - finish.X);
             SetPen(pen);
+            SetThick(thick);
+            SetOutter(outter);
         }
-        public void setRect(Point start, Point finish, Pen pen, Color inner, Color outter)
+        public void SetRect(Rectangle r)
         {
-            Colored = true;
-            setRect(start, finish, pen);
+            rect = r;
+        }
+        public void setRect(Point start, Point finish, Pen pen,int thick,  Color outter, Color inner)
+        {
+            SetColored(true);
+            setRect(start, finish, pen,thick,outter);
             SetInner(inner);
             SetOutter(outter);
         }
