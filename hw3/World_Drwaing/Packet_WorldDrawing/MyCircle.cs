@@ -11,6 +11,7 @@ namespace Packet_WorldDrawing
     /// <summary>
     /// 지금까지 그려졌던 원들을 저장하는 클래스
     /// </summary>
+    [Serializable]
     public class MyCircle : MyShape
     {
         private Rectangle rectC;
@@ -20,14 +21,13 @@ namespace Packet_WorldDrawing
             rectC = new Rectangle();
         }
 
-        public void setRectC(Point start, Point finish, Pen pen,int thick,Color outter)
+        public void setRectC(Point start, Point finish,int thick,Color outter)
         {
             SetColored(false);
             rectC.X = Math.Min(start.X, finish.X);
             rectC.Y = Math.Min(start.Y, finish.Y);
             rectC.Width = Math.Abs(start.X - finish.X);
             rectC.Height = Math.Abs(start.Y - finish.Y);
-            SetPen(pen);
             SetThick(thick);
             SetOutter(outter);
         }
@@ -35,10 +35,10 @@ namespace Packet_WorldDrawing
         {
             rectC = r;
         }
-        public void setRectC(Point start, Point finish, Pen pen,int thick,Color inner , Color outter)
+        public void setRectC(Point start, Point finish,int thick,Color inner , Color outter)
         {
             SetColored(true);
-            setRectC(start, finish, pen,thick,outter);
+            setRectC(start, finish,thick,outter);
             SetInner(inner);
             SetOutter(outter);
         }

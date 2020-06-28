@@ -38,23 +38,24 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 291);
+            this.panel1.Size = new System.Drawing.Size(800, 285);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.drawingBoard_Paint);
             // 
             // chattingLog
             // 
             this.chattingLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chattingLog.Location = new System.Drawing.Point(0, 291);
+            this.chattingLog.Location = new System.Drawing.Point(0, 285);
             this.chattingLog.Multiline = true;
             this.chattingLog.Name = "chattingLog";
             this.chattingLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.chattingLog.Size = new System.Drawing.Size(800, 159);
+            this.chattingLog.Size = new System.Drawing.Size(800, 165);
             this.chattingLog.TabIndex = 0;
             // 
             // splitter1
             // 
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter1.Location = new System.Drawing.Point(0, 291);
+            this.splitter1.Location = new System.Drawing.Point(0, 285);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(800, 3);
             this.splitter1.TabIndex = 1;

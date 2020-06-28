@@ -211,7 +211,6 @@ namespace Client
             switch (name)
             {
                 case 1:
-                    md.pen.Width = 1;
                     md.thick = 1;
                     line1.Checked = true;
                     line2.Checked = false;
@@ -220,7 +219,6 @@ namespace Client
                     line4.Checked = false;
                     break;
                 case 2:
-                    md.pen.Width = 2;
                     md.thick = 2;
                     line1.Checked = false;
                     line2.Checked = true;
@@ -229,7 +227,6 @@ namespace Client
                     line4.Checked = false;
                     break;
                 case 3:
-                    md.pen.Width = 3;
                     md.thick = 3;
                     line1.Checked = false;
                     line2.Checked = false;
@@ -238,7 +235,6 @@ namespace Client
                     line4.Checked = false;
                     break;
                 case 4:
-                    md.pen.Width = 4;
                     md.thick = 4;
                     line1.Checked = false;
                     line2.Checked = false;
@@ -247,7 +243,6 @@ namespace Client
                     line4.Checked = false;
                     break;
                 case 5:
-                    md.pen.Width = 5;
                     md.thick = 5;
                     line1.Checked = false;
                     line2.Checked = false;
@@ -295,7 +290,6 @@ namespace Client
             cld.Color = btnColor2.BackColor;
             cld.ShowDialog();
             btnColor2.BackColor = cld.Color;
-            md.pen.Color = btnColor2.BackColor;
             md.outter = btnColor2.BackColor;
         }
 
@@ -360,7 +354,6 @@ namespace Client
                 movePoint = e.Location;
                 for (int i = 0; i <= md.nPencil; i++)
                 {
-                    if (md.mypencils[i].GetPen() == null) break;
                     List<Point> draw = new List<Point>();
 
                     foreach (Point paint in md.mypencils[i].GetList())
@@ -375,7 +368,6 @@ namespace Client
                 }
                 for (int i = 0; i <= md.nline; i++)
                 {
-                    if (md.mylines[i].GetPen() == null) break;
                     Point p1 = md.mylines[i].getPoint1();
                     Point p2 = md.mylines[i].getPoint2();
                     Point[] ps = new Point[2];
@@ -387,7 +379,6 @@ namespace Client
                 }
                 for (int i = 0; i <= md.nrect; i++)
                 {
-                    if (md.myrect[i].GetPen() == null) break;
                     Rectangle myrect = md.myrect[i].GetRect();
                     myrect.X = myrect.X - (deltaX);
                     myrect.Y = myrect.Y - (deltaY);
@@ -395,7 +386,6 @@ namespace Client
                 }
                 for (int i = 0; i <= md.ncircle; i++)
                 {
-                    if (md.mycircle[i].GetPen() == null) break;
                     Rectangle mycircle = md.mycircle[i].getRectC();
                     mycircle.X = mycircle.X - (deltaX);
                     mycircle.Y = mycircle.Y - (deltaY);
@@ -419,6 +409,19 @@ namespace Client
 
             drawingBoard.Invalidate(true);
             drawingBoard.Update();
+
+            byte[] buffer = Encoding.Unicode.GetBytes("이미지전송$");
+            stream.Write(buffer, 0, buffer.Length);
+            stream.Flush();
+
+            byte[] sendBuffer = new byte[1024*100];
+            WorldPaint wp = new WorldPaint(md);
+            wp.Type = PacketType.DRAWING;
+
+
+            Packet.Serialize(wp).CopyTo(sendBuffer, 0);
+            stream.Write(sendBuffer, 0, 1024 * 100);
+            stream.Flush();
 
             //서버에 패킷전송
 
@@ -453,11 +456,10 @@ namespace Client
                     {
                         case ShapeType.PENCIL:
                             {
-                                if (md.myshapes[i].GetPen() == null) break;
                                 List<Point> draw = new List<Point>();
-                                Pen monami = md.myshapes[i].GetPen();
+
+                                Pen monami = new Pen(md.myshapes[i].GetOutter());
                                 monami.Width = md.myshapes[i].GetThick();
-                                monami.Color = md.myshapes[i].GetOutter();
 
                                 try
                                 {
@@ -476,12 +478,10 @@ namespace Client
                             }
                         case ShapeType.LINE:
                             {
-                                if (md.myshapes[i].GetPen() == null) break;
-
                                 MyLines line = (MyLines)md.myshapes[i];
-
-                                line.LPen.Width = line.GetThick();
-                                line.LPen.Color = line.GetOutter();
+                                SolidBrush brush = new SolidBrush(line.GetOutter());
+                                Pen pen = new Pen(brush);
+                                pen.Width = line.GetThick();
 
                                 Point p1 = line.getPoint1();
                                 p1.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - p1.X) * ratio);
@@ -491,12 +491,11 @@ namespace Client
                                 p2.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - p2.X) * ratio);
                                 p2.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - p2.Y) * ratio);
 
-                                e.Graphics.DrawLine(((MyLines)md.myshapes[i]).LPen, p1, p2);
+                                e.Graphics.DrawLine(pen, p1, p2);
                                 break;
                             }
                         case ShapeType.RECT:
                             {
-                                if (md.myshapes[i].GetPen() == null) break;
                                 Rectangle myrect = ((MyRect)md.myshapes[i]).GetRect();
 
                                 myrect.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - myrect.X) * ratio);
@@ -510,17 +509,14 @@ namespace Client
                                     brush.Color = md.myshapes[i].GetInner();
                                     e.Graphics.FillRectangle(brush, myrect);
                                 }
+                                Pen pen = new Pen(md.myshapes[i].GetOutter());
+                                pen.Width = md.myshapes[i].GetThick();
 
-                                Pen tmpPen = md.myshapes[i].GetPen();
-                                tmpPen.Width = md.myshapes[i].GetThick();
-                                tmpPen.Color = md.myshapes[i].GetOutter();
-                                e.Graphics.DrawRectangle(tmpPen, myrect);
+                                e.Graphics.DrawRectangle(pen, myrect);
                                 break;
                             }
                         case ShapeType.CIRCLE:
                             {
-                                if (md.myshapes[i].GetPen() == null) break;
-
                                 Rectangle mycircle = ((MyCircle)md.myshapes[i]).getRectC();
                                 mycircle.X = zoomPoint.X - (int)Math.Round((zoomPoint.X - mycircle.X) * ratio);
                                 mycircle.Y = zoomPoint.Y - (int)Math.Round((zoomPoint.Y - mycircle.Y) * ratio);
@@ -533,16 +529,15 @@ namespace Client
                                     brush.Color = md.myshapes[i].GetInner();
                                     e.Graphics.FillEllipse(brush, mycircle);
                                 }
-                                Pen tmpPen2 = md.myshapes[i].GetPen();
-                                tmpPen2.Width = md.myshapes[i].GetThick();
-                                tmpPen2.Color = md.myshapes[i].GetOutter();
-                                e.Graphics.DrawEllipse(tmpPen2, mycircle);
+                                Pen pen = new Pen(md.myshapes[i].GetOutter());
+                                pen.Width = md.myshapes[i].GetThick();
+                                e.Graphics.DrawEllipse(pen, mycircle);
                                 break;
                             }
                         default: { break; }
                     }
                 }
-                catch (Exception ex) { chatting.Text += ex.Message; }
+                catch (Exception ex) {  }
             }
         }
         #endregion

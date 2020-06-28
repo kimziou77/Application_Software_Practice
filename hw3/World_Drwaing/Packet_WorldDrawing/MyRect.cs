@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Packet_WorldDrawing
 {
+    [Serializable]
     public class MyRect : MyShape
     {
         private Rectangle rect;
@@ -17,14 +18,13 @@ namespace Packet_WorldDrawing
             SetType(ShapeType.RECT);
             rect = new Rectangle();
         }
-        public void setRect(Point start, Point finish ,Pen pen,int thick,Color outter)
+        public void setRect(Point start, Point finish ,int thick,Color outter)
         {
             SetColored(false);
             rect.X = Math.Min(start.X, finish.X);
             rect.Y = Math.Min(start.Y, finish.Y);
             rect.Height = Math.Abs(start.Y - finish.Y);
             rect.Width = Math.Abs(start.X - finish.X);
-            SetPen(pen);
             SetThick(thick);
             SetOutter(outter);
         }
@@ -32,10 +32,10 @@ namespace Packet_WorldDrawing
         {
             rect = r;
         }
-        public void setRect(Point start, Point finish, Pen pen,int thick,  Color outter, Color inner)
+        public void setRect(Point start, Point finish, int thick,  Color outter, Color inner)
         {
             SetColored(true);
-            setRect(start, finish, pen,thick,outter);
+            setRect(start, finish, thick,outter);
             SetInner(inner);
             SetOutter(outter);
         }

@@ -21,6 +21,8 @@ namespace Packet_WorldDrawing
         public Point start;//도형 시작점
         public Point finish;//도형 끝 점
 
+        public Pen pen;
+
         public int nPencil;
         public int nline;
         public int nrect;
@@ -56,6 +58,7 @@ namespace Packet_WorldDrawing
 
             start = new Point(0, 0);
             finish = new Point(0, 0);
+            pen = new Pen(Color.Black);
 
             outter = Color.Black;
             inner = Color.White;
@@ -63,7 +66,7 @@ namespace Packet_WorldDrawing
             mylines = new MyLines[100];
             myrect = new MyRect[100];
             mycircle = new MyCircle[100];
-            myshapes = new MyShape[100];
+            myshapes = new MyShape[400];
 
             nPencil = 0;
             nline = 0;
@@ -88,6 +91,7 @@ namespace Packet_WorldDrawing
             string s = "";
             s += "start : " + start.ToString()
               +" finish :  "+finish.ToString()+"\r\n";
+            s += "pen : " + pen.Color.ToString() + "\r\n";
             s += "inner : " + inner.ToString()
               + " outter : " + outter.ToString() + "\r\n";
             s += "Colored ? " + Colored.ToString() + "\r\n";
@@ -95,6 +99,7 @@ namespace Packet_WorldDrawing
               + " nrect :  " + nrect.ToString()
               + " ncircle : " + ncircle.ToString()
               + " npencil : " + nPencil.ToString() +"\r\n";
+            s += "thick : " + pen.Width.ToString() + "\r\n";
 
             return s;
         }
@@ -116,7 +121,7 @@ namespace Packet_WorldDrawing
         public void SetMyRect()
         {
             if(!Colored)
-                myrect[nrect].setRect(start, finish,thick,outter);
+                myrect[nrect].setRect(start, finish, thick,outter);
             else
                 myrect[nrect].setRect(start, finish, thick, outter, inner);
             myshapes[nShape] = myrect[nrect];

@@ -14,14 +14,14 @@ namespace Packet_WorldDrawing
         RECT,
         CIRCLE
     }
-
+    [Serializable]
     public class MyShape
     {
         private bool Colored;
         private Color inner;
         private Color outter;
         public ShapeType type;
-        private Pen pen;
+        
         int thick;
 
         #region setter
@@ -36,10 +36,6 @@ namespace Packet_WorldDrawing
         public void SetOutter(Color outter)
         {
             this.outter = outter;
-        }
-        public void SetPen(Pen pen)
-        {
-            this.pen = pen;
         }
         public void SetThick(int thick)
         {
@@ -63,10 +59,6 @@ namespace Packet_WorldDrawing
         public int GetThick()
         {
             return thick;
-        }
-        public Pen GetPen()
-        {
-            return this.pen;
         }
         public bool IsColored()
         {

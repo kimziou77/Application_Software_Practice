@@ -7,6 +7,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using static Packet_WorldDrawing.Class1;
 
 namespace World_Drwaing
 {
@@ -32,7 +34,7 @@ namespace World_Drwaing
         public delegate void DisconnectedHandler(TcpClient clientSocket);
         public event DisconnectedHandler OnDisconnected;
 
-        public delegate void DrawingMessage(MyDrawings md);
+        public delegate void DrawingMessage(WorldPaint md);
         public event DrawingMessage OnDrawingMessage;
 
         private void doChat()
@@ -40,19 +42,34 @@ namespace World_Drwaing
             NetworkStream stream = null;
             try
             {
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[1024*100];
                 string msg = string.Empty;
                 int bytes = 0;
                 int MessageCount = 0;
+                stream = clientSocket.GetStream();
 
                 while (true)
                 {
                     MessageCount++;
-                    stream = clientSocket.GetStream();
                     bytes = stream.Read(buffer, 0, buffer.Length);
                     msg = Encoding.Unicode.GetString(buffer, 0, bytes);
                     msg = msg.Substring(0, msg.IndexOf("$"));
+                    if (msg.Equals("이미지전송"))
+                    {
+                        try
+                        {
+                            bytes = stream.Read(buffer, 0, buffer.Length);
+                        }
+                        catch(Exception ex) { MessageBox.Show(ex.Message); }
+                        Packet packet = (Packet)Packet.Desserialize(buffer);
 
+                        WorldPaint wp = (WorldPaint)packet;
+                        
+                        OnDrawingMessage(wp);
+
+                        //받고나서
+                        //모두에게 뿌리기
+                    }
                     if (OnReceived != null)
                         OnReceived(msg, clientList[clientSocket].ToString());
                 }

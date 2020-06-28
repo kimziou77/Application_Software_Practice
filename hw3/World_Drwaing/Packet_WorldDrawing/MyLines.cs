@@ -12,10 +12,10 @@ namespace Packet_WorldDrawing
     /// <summary>
     /// 지금까지 그려졌던 선들을 저장하는 클래스
     /// </summary>
+    [Serializable]
     public class MyLines : MyShape
     {
         private Point[] point = new Point[2];
-        public Pen LPen;
         public MyLines()
         {
             SetType(ShapeType.LINE);
@@ -28,23 +28,19 @@ namespace Packet_WorldDrawing
             point[0] = r[0];
             point[1] = r[1];
         }
-        public void setPoint(Point start, Point finish, Pen pen,int thick,Color outter)
+        public void setPoint(Point start, Point finish,int thick,Color outter)
         {
             SetColored(false);
             point[0] = start;
             point[1] = finish;
-            LPen = pen;
-            SetPen(pen);
             SetThick(thick);
             SetOutter(outter);
         }
-        public void setPoint(Point start, Point finish, Pen pen, int thick, Color outter,Color inner)
+        public void setPoint(Point start, Point finish, int thick, Color outter,Color inner)
         {
             SetColored(true);
             point[0] = start;
             point[1] = finish;
-            LPen = pen;
-            SetPen(pen);
             SetThick(thick);
             SetOutter(outter);
             SetInner(inner);

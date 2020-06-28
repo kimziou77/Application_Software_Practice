@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Packet_WorldDrawing
 {
+    [Serializable]
     public class MyPencil : MyShape
     {
         private List<Point> pointList;
@@ -15,12 +16,11 @@ namespace Packet_WorldDrawing
             SetType(ShapeType.PENCIL);
             pointList = new List<Point>();
         }
-        public void setPencil(Point current, Pen pen, int thick, Color outter)
+        public void setPencil(Point current, int thick, Color outter)
         {
             SetColored(false);
             SetThick(thick);
             SetOutter(outter);
-            SetPen(pen);
             pointList.Add(current);
         }
         public List<Point> GetList()

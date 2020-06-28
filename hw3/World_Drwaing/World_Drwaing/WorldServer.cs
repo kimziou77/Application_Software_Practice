@@ -28,6 +28,8 @@ namespace World_Drwaing
         TcpClient clientSocket = null; //소켓
         static int counter = 0;// 사용자 수
         public Dictionary<TcpClient, string> clientList = new Dictionary<TcpClient, string>();
+        MyDrawings md;
+
 
         public WorldServer()
         {
@@ -68,6 +70,7 @@ namespace World_Drwaing
                     handleClient h_client = new handleClient();//클라이언트 추가
                     h_client.OnReceived += new handleClient.MessageDisplayHandler(OnReceived);
                     h_client.OnDisconnected += new handleClient.DisconnectedHandler(h_client_OnDisconnected);
+                    h_client.OnDrawingMessage += new handleClient.DrawingMessage(DrawPicture);
                     h_client.startClient(clientSocket, clientList);
                 }
                 catch (SocketException se) { break; }
@@ -83,6 +86,101 @@ namespace World_Drwaing
             if (clientList.ContainsKey(clientSocket))
                 clientList.Remove(clientSocket);
         }
+        private void DrawPicture(WorldPaint wp)
+        {
+            md.mylines = wp.mylines;
+            md.mypencils = wp.mypencils;
+            md.myrect = wp.myrect;
+            md.mycircle = wp.mycircle;
+            md.myshapes = wp.myshapes;
+            md.nShape = wp.nShape;
+        }
+        #region 그림
+        private void drawingBoard_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            if (md == null) return;
+
+            for (int i = 0; i <= md.nShape; i++)
+            {
+                try
+                {
+                    switch (md.myshapes[i].type)
+                    {
+                        case ShapeType.PENCIL:
+                            {
+                                List<Point> draw = new List<Point>();
+
+                                Pen monami = new Pen(md.myshapes[i].GetOutter());
+                                monami.Width = md.myshapes[i].GetThick();
+
+                                try
+                                {
+                                    foreach (Point paint in ((MyPencil)md.myshapes[i]).GetList())
+                                    {
+                                        Point tmp = paint;
+                                        draw.Add(tmp);
+                                    }
+                                    e.Graphics.DrawLines(monami, draw.ToArray());
+                                }
+                                catch { }
+
+                                break;
+                            }
+                        case ShapeType.LINE:
+                            {
+                                MyLines line = (MyLines)md.myshapes[i];
+                                SolidBrush brush = new SolidBrush(line.GetOutter());
+                                Pen pen = new Pen(brush);
+                                pen.Width = line.GetThick();
+
+                                Point p1 = line.getPoint1();
+
+                                Point p2 = line.getPoint2();
+
+                                e.Graphics.DrawLine(pen, p1, p2);
+                                break;
+                            }
+                        case ShapeType.RECT:
+                            {
+                                Rectangle myrect = ((MyRect)md.myshapes[i]).GetRect();
+
+
+                                if (!md.myrect[i].IsColored())
+                                {
+                                    SolidBrush brush = new SolidBrush(md.myshapes[i].GetInner());
+                                    brush.Color = md.myshapes[i].GetInner();
+                                    e.Graphics.FillRectangle(brush, myrect);
+                                }
+                                Pen pen = new Pen(md.myshapes[i].GetOutter());
+                                pen.Width = md.myshapes[i].GetThick();
+
+                                e.Graphics.DrawRectangle(pen, myrect);
+                                break;
+                            }
+                        case ShapeType.CIRCLE:
+                            {
+
+                                Rectangle mycircle = ((MyCircle)md.myshapes[i]).getRectC();
+
+                                if (!md.myshapes[i].IsColored())
+                                {
+                                    SolidBrush brush = new SolidBrush(md.myshapes[i].GetInner());
+                                    brush.Color = md.myshapes[i].GetInner();
+                                    e.Graphics.FillEllipse(brush, mycircle);
+                                }
+                                Pen pen = new Pen(md.myshapes[i].GetOutter());
+                                pen.Width = md.myshapes[i].GetThick();
+                                e.Graphics.DrawEllipse(pen, mycircle);
+                                break;
+                            }
+                        default: { break; }
+                    }
+                }
+                catch (Exception ex) { }
+            }
+        }
+        #endregion
         private void OnReceived(string message, string user_name) // cleint로 부터 받은 데이터
         {
             if (message.Equals("leaveChat"))
@@ -102,11 +200,12 @@ namespace World_Drwaing
             {
                 user_name = user_name.Substring(0, user_name.IndexOf("$"));
                 //message = message.Substring(0, message.IndexOf("\r"));
-                string displayMessage = user_name + " : " + message;
+                string displayMessage ="[ " + user_name + " ] : " + message;
                 Message(displayMessage); // Server단에 출력
                 SendMessageAll(message, user_name, true); // 모든 Client에게 전송
             }
         }
+
         public void SendDrawingAll()
         {
             foreach (var pair in clientList)
@@ -119,12 +218,13 @@ namespace World_Drwaing
                 //    buffer = Encoding.Unicode.GetBytes(user_name + " 님이 퇴장했습니다.");
                 //else
                 //    buffer = Encoding.Unicode.GetBytes("[ " + user_name + " ] : " + message);
-
+                
                 //그림 정보 전달
                 stream.Write(buffer, 0, buffer.Length); // 버퍼 쓰기
                 stream.Flush();
             }
         }
+
         public void SendMessageAll(string message, string user_name, bool flag)
         {
             foreach (var pair in clientList)

@@ -50,6 +50,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="handleClient.cs" />
+    <Compile Include="MyDrawings.cs" />
     <Compile Include="WorldServer.cs">
       <SubType>Form</SubType>
     </Compile>

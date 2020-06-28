@@ -13,13 +13,36 @@ namespace Packet_WorldDrawing
     {
         INIT,
         MESSAGE,
-        FILE_INFO,
-        DOWNLOAD,
+        DRAWING,
         EXIT
     }
 
     public class Class1
     {
+        [Serializable]
+        public class WorldPaint : Packet
+        {
+            public MyDrawings drawings;
+
+
+            public MyLines[] mylines;
+            public MyRect[] myrect;
+            public MyCircle[] mycircle;
+            public MyPencil[] mypencils;
+            public MyShape[] myshapes;
+            public int nShape;
+
+            public WorldPaint(MyDrawings md)
+            {
+                drawings = md;
+                mylines = md.mylines;
+                myrect = md.myrect;
+                mycircle = md.mycircle;
+                myshapes = md.myshapes;
+                nShape = md.nShape;
+            }
+        }
+        
         [Serializable]
         public class Messenger : Packet
         {
@@ -42,17 +65,13 @@ namespace Packet_WorldDrawing
             }
         }
 
-        [Serializable]
-        public class WorldPaint : Packet
-        {
-            MyDrawings drawings;
-        }
+
 
         [Serializable]
         public class Packet
         {
             public int Length;
-            public int Type;
+            public PacketType Type;
 
             public Packet()
             {
@@ -62,7 +81,7 @@ namespace Packet_WorldDrawing
 
             public static byte[] Serialize(Object o)
             {
-                MemoryStream ms = new MemoryStream(1024 * 4);
+                MemoryStream ms = new MemoryStream(1024 * 100);
                 BinaryFormatter bf = new BinaryFormatter();
                 bf.Serialize(ms, o);
                 return ms.ToArray();
@@ -70,7 +89,7 @@ namespace Packet_WorldDrawing
 
             public static Object Desserialize(byte[] bt)
             {
-                MemoryStream ms = new MemoryStream(1024 * 4);
+                MemoryStream ms = new MemoryStream(1024 * 32);
                 foreach (byte b in bt)
                 {
                     ms.WriteByte(b);
